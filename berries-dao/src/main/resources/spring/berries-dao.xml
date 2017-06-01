@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- 启用注解 -->
+	<context:annotation-config />	
+	
+	<!-- 启动组件扫描，排除@Controller组件，该组件由SpringMVC配置文件扫描 -->
+	<context:component-scan base-package="com.lee.berries.dao"/>
+    
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass">  
+            <value>${jdbc.driverClassName}</value>  
+        </property>  
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        
+        <!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->   
+        <property name="acquireIncrement">  
+            <value>${c3p0.acquireIncrement}</value>  
+        </property>  
+        <!--初始化时获取三个连接，取值应在minPoolSize与maxPoolSize之间。Default: 3 -->   
+        <property name="initialPoolSize">  
+            <value>${c3p0.initialPoolSize}</value>  
+        </property>  
+        <property name="minPoolSize">  
+            <value>${c3p0.minPoolSize}</value>  
+        </property>  
+        <property name="maxPoolSize">  
+            <value>${c3p0.maxPoolSize}</value>  
+        </property>  
+        <!--最大空闲时间,60秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->   
+        <property name="maxIdleTime">  
+            <value>${c3p0.maxIdleTime}</value>  
+        </property>  
+        <!--每60秒检查所有连接池中的空闲连接。Default: 0 -->   
+        <property name="idleConnectionTestPeriod">  
+            <value>${c3p0.idleConnectionTestPeriod}</value>  
+        </property>  
+        <!-- JDBC的标准参数，用以控制数据源内加载的PreparedStatements数量。但由于预缓存的statements   
+                            属于单个connection而不是整个连接池。所以设置这个参数需要考虑到多方面的因素。   
+                            如果maxStatements与maxStatementsPerConnection均为0，则缓存被关闭。Default: 0-->   
+        <property name="maxStatements">  
+            <value>${c3p0.maxStatements}</value>  
+        </property>  
+        <!-- c3p0是异步操作的，缓慢的JDBC操作通过帮助进程完成。扩展这些操作可以有效的提升性能 通过  
+                                  多线程实现多个操作同时被执行。Default: 3-->   
+        <property name="numHelperThreads">  
+            <value>${c3p0.numHelperThreads}</value>  
+        </property>  
+    </bean>
+
+	<!-- 自动扫描mapper.xml文件 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:mybatis/mapper/*.xml</value>
+            </list>
+        </property>
+        <property name="typeAliasesPackage" value="com.lee.berries.dao.po" />
+        <property name="plugins">
+            <array>
+                <bean class="com.lee.berries.dao.plugin.QueryPlugin"></bean>
+                <bean class="com.lee.berries.dao.plugin.UpdatePlugin"></bean>
+            </array>
+        </property>
+    </bean>
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate"  scope="prototype">
+        <constructor-arg ref="sqlSessionFactory"/>
+    </bean>
+
+</beans>

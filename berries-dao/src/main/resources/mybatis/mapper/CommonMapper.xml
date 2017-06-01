@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CommonMapper">
+    <select id="getOne" parameterType="Object" resultType="Map"/>
+    
+    <select id="list" parameterType="Object" resultType="Map"/>
+    
+    <select id="row" parameterType="Object" resultType="Map"/>
+    
+    <update id="save"  parameterType="Object"/>
+    
+    <update id="update"  parameterType="Object"/>
+    
+    <update id="updateWithOptimisticLock" parameterType="Object"/>
+    
+    <delete id="delete"  parameterType="Object"/>
+</mapper>
