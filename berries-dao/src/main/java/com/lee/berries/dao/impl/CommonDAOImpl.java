@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import com.lee.berries.common.utils.ReflectUtils;
 import com.lee.berries.dao.CommonDAO;
 import com.lee.berries.dao.Page;
-import com.lee.berries.dao.constants.StatumentConstants;
+import com.lee.berries.dao.constants.StatementConstants;
 import com.lee.berries.dao.params.UpdateWithOptimisticLockParam;
 import com.lee.berries.dao.provider.IdNameProvider;
 
@@ -36,7 +36,7 @@ public class CommonDAOImpl implements CommonDAO {
 		catch(Exception e){
 			//防御性容错
 		}
-		Map<String, Object> data = sqlSessionTemplate.selectOne(StatumentConstants.STATEMENT_GETONE_ID, target);
+		Map<String, Object> data = sqlSessionTemplate.selectOne(StatementConstants.STATEMENT_GETONE_ID, target);
 		return ReflectUtils.parseMapToEntity(data, classzz);
 	}
 
@@ -56,7 +56,7 @@ public class CommonDAOImpl implements CommonDAO {
 	public <T> int listByExampleRow(T object){
 		int row = 0;
 		if(object != null){
-			List<Map<String,Object>> list = sqlSessionTemplate.selectList(StatumentConstants.STATEMENT_ROW_ID, object);
+			List<Map<String,Object>> list = sqlSessionTemplate.selectList(StatementConstants.STATEMENT_ROW_ID, object);
 			if(list != null && list.size() >0){
 				Map<String, Object> data = list.get(0);
 				if(data.containsKey("c")){
@@ -76,7 +76,7 @@ public class CommonDAOImpl implements CommonDAO {
 	@Override
 	public <T> List<T> listByExample(T object, int offset, int limit) {
 		RowBounds row = new RowBounds(offset, limit);//强制限制返回的记录数。防止一次性查询全表
-		List<Map<String,Object>> list = sqlSessionTemplate.selectList(StatumentConstants.STATEMENT_LIST_ID, object, row);
+		List<Map<String,Object>> list = sqlSessionTemplate.selectList(StatementConstants.STATEMENT_LIST_ID, object, row);
 		Class<T> classzz = (Class<T>) object.getClass();
 		return ReflectUtils.parseMapToEntity(list, classzz);
 	}
@@ -101,23 +101,23 @@ public class CommonDAOImpl implements CommonDAO {
 
 	@Override
 	public <T> void save(T object) {
-		sqlSessionTemplate.insert(StatumentConstants.STATEMENT_SAVE_ID, object);
+		sqlSessionTemplate.insert(StatementConstants.STATEMENT_SAVE_ID, object);
 	}
 	
 	@Override
 	public <T> void update(T object) {
-		sqlSessionTemplate.update(StatumentConstants.STATEMENT_UPDATE_ID, object);
+		sqlSessionTemplate.update(StatementConstants.STATEMENT_UPDATE_ID, object);
 	}
 
 	@Override
 	public <T> int updateWithOptimisticLock(T update, T lock) {
 		UpdateWithOptimisticLockParam<T> object = new UpdateWithOptimisticLockParam<T>(update, lock);
-		return sqlSessionTemplate.update(StatumentConstants.STATEMENT_UPDATEWITHOPTIMISTICLOCK_ID, object);
+		return sqlSessionTemplate.update(StatementConstants.STATEMENT_UPDATEWITHOPTIMISTICLOCK_ID, object);
 	}
 	
 	@Override
 	public <T> void remove(T object) {
-		sqlSessionTemplate.delete(StatumentConstants.STATEMENT_DELETE_ID, object);
+		sqlSessionTemplate.delete(StatementConstants.STATEMENT_DELETE_ID, object);
 	}
 
 	

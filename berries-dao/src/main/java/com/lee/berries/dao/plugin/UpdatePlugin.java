@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.lee.berries.common.utils.BerriesUtils;
-import com.lee.berries.dao.constants.StatumentConstants;
+import com.lee.berries.dao.constants.StatementConstants;
 import com.lee.berries.dao.sqlsource.DeleteSqlSource;
 import com.lee.berries.dao.sqlsource.SaveSqlSource;
 import com.lee.berries.dao.sqlsource.UpdateSqlSource;
@@ -29,20 +29,20 @@ public class UpdatePlugin implements Interceptor {
 	public Object intercept(Invocation invocation) throws Throwable {
 		MappedStatement statement = (MappedStatement) invocation.getArgs()[0];
 		Object paramObject = invocation.getArgs()[1];
-		if(StatumentConstants.STATEMENT_SAVE_ID.endsWith(statement.getId())){
+		if(StatementConstants.STATEMENT_SAVE_ID.endsWith(statement.getId())){
 			SqlSource sqlSource = new SaveSqlSource(statement.getConfiguration(), statement.getBoundSql(paramObject), paramObject);
 			BerriesUtils.setFieldValue(statement, "sqlSource", sqlSource);
 		}
-		if(StatumentConstants.STATEMENT_UPDATE_ID.endsWith(statement.getId())){
+		if(StatementConstants.STATEMENT_UPDATE_ID.endsWith(statement.getId())){
 			SqlSource sqlSource = new UpdateSqlSource(statement.getConfiguration(), statement.getBoundSql(paramObject), paramObject);
 			BerriesUtils.setFieldValue(statement, "sqlSource", sqlSource);
 		}
-		if(StatumentConstants.STATEMENT_UPDATEWITHOPTIMISTICLOCK_ID.endsWith(statement.getId())){
+		if(StatementConstants.STATEMENT_UPDATEWITHOPTIMISTICLOCK_ID.endsWith(statement.getId())){
 			UpdateWithOptimisticLockSqlSource sqlSource = new UpdateWithOptimisticLockSqlSource(statement.getConfiguration(), statement.getBoundSql(paramObject), paramObject);
 			BerriesUtils.setFieldValue(statement, "sqlSource", sqlSource);
 			invocation.getArgs()[1] = sqlSource.getParameterObject();
 		}
-		if(StatumentConstants.STATEMENT_DELETE_ID.endsWith(statement.getId())){
+		if(StatementConstants.STATEMENT_DELETE_ID.endsWith(statement.getId())){
 			SqlSource sqlSource = new DeleteSqlSource(statement.getConfiguration(), statement.getBoundSql(paramObject), paramObject);
 			BerriesUtils.setFieldValue(statement, "sqlSource", sqlSource);
 		}

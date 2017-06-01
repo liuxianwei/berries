@@ -1,6 +1,6 @@
 package com.lee.berries.dao.constants;
 
-public class StatumentConstants {
+public class StatementConstants {
 
 	public static final String STATEMENT_GETONE_ID = "CommonMapper.getOne";
 	
