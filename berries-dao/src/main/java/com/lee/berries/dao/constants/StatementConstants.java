@@ -8,6 +8,10 @@ public class StatementConstants {
 	
 	public static final String STATEMENT_ROW_ID = "CommonMapper.row";
 	
+	public static final String STATEMENT_QUERY_ID = "CommonMapper.query";
+	
+	public static final String STATEMENT_QUERY_ROW_ID = "CommonMapper.queryRow";
+	
 	public static final String STATEMENT_SAVE_ID = "CommonMapper.save";
 	
 	public static final String STATEMENT_UPDATE_ID = "CommonMapper.update";

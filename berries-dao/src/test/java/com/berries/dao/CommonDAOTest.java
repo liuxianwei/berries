@@ -6,6 +6,7 @@ import com.berries.test.BaseTest;
 import com.lee.berries.dao.CommonDAO;
 import com.lee.berries.dao.Page;
 import com.lee.berries.dao.po.UserDetails;
+import com.lee.berries.dao.search.UserQuery;
 
 public class CommonDAOTest extends BaseTest {
 
@@ -47,5 +48,14 @@ public class CommonDAOTest extends BaseTest {
 		UserDetails user = new UserDetails();
 		user.setId(3L);
 		testDAO.remove(user);
+	}
+	
+	@Test
+	public void testQuery(){
+		CommonDAO testDAO = getBean(CommonDAO.class);
+		UserQuery query = new UserQuery();
+		query.setU_id(1L);
+		query.setOrder_u_id("desc");
+		testDAO.query(query, new Page<UserDetails>());
 	}
 }

@@ -16,6 +16,7 @@ import com.lee.berries.dao.Page;
 import com.lee.berries.dao.constants.StatementConstants;
 import com.lee.berries.dao.params.UpdateWithOptimisticLockParam;
 import com.lee.berries.dao.provider.IdNameProvider;
+import com.lee.berries.dao.search.BaseQuery;
 
 @Component
 public class CommonDAOImpl implements CommonDAO {
@@ -95,6 +96,43 @@ public class CommonDAOImpl implements CommonDAO {
 	}
 	
 	@Override
+	public <T> int queryRow(BaseQuery<T> query){
+		if(query == null){
+			return 0;
+		}
+		int row = 0;
+		if(query != null){
+			List<Map<String,Object>> list = sqlSessionTemplate.selectList(StatementConstants.STATEMENT_QUERY_ROW_ID, query);
+			if(list != null && list.size() >0){
+				Map<String, Object> data = list.get(0);
+				if(data.containsKey("c")){
+					row = ((Long)data.get("c")).intValue();
+				}
+			}
+		}
+		return row;
+	}
+	
+	@Override
+	public <T> Page<T> query(BaseQuery<T> query, Page<T> page){
+		if(page == null){
+			page = new Page<T>();
+		}
+		if(query == null){
+			return null;
+		}
+		int row = queryRow(query);
+		if(row > 0){
+			RowBounds rowBounds = new RowBounds(page.getCurrentResult(), page.getPageSize());//强制限制返回的记录数。防止一次性查询全表
+			List<Map<String,Object>> list = sqlSessionTemplate.selectList(StatementConstants.STATEMENT_QUERY_ID, query, rowBounds);
+			page.setTotalResult(row);
+			page.setResult(ReflectUtils.parseMapToEntity(list, query.getParamType()));
+		}
+		return page;
+	}
+	
+	
+	@Override
 	public List<Map<String, Object>> list(String statementId, Object object) {
 		return sqlSessionTemplate.selectList(statementId, object);
 	}
@@ -119,7 +157,7 @@ public class CommonDAOImpl implements CommonDAO {
 	public <T> void remove(T object) {
 		sqlSessionTemplate.delete(StatementConstants.STATEMENT_DELETE_ID, object);
 	}
-
+	
 	
 
 	

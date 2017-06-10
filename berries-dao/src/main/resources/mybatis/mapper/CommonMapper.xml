@@ -7,6 +7,10 @@
     
     <select id="row" parameterType="Object" resultType="Map"/>
     
+    <select id="query" parameterType="Object" resultType="Map"/>
+    
+    <select id="queryRow" parameterType="Object" resultType="Map"/>
+    
     <update id="save"  parameterType="Object"/>
     
     <update id="update"  parameterType="Object"/>

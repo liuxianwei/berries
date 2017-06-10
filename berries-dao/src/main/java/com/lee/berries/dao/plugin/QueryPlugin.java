@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import com.lee.berries.common.utils.BerriesUtils;
 import com.lee.berries.dao.constants.StatementConstants;
+import com.lee.berries.dao.sqlsource.QuerySqlSource;
 import com.lee.berries.dao.sqlsource.RowSqlSource;
 import com.lee.berries.dao.sqlsource.SelectSqlSource;
 
@@ -40,6 +41,14 @@ public class QueryPlugin implements Interceptor {
 		}
 		if(StatementConstants.STATEMENT_ROW_ID.endsWith(statement.getId())){ //查询记录数！
 			SqlSource sqlSource = new RowSqlSource(statement.getConfiguration(), statement.getBoundSql(paramObject), paramObject);
+			BerriesUtils.setFieldValue(statement, "sqlSource", sqlSource);
+		}
+		if(StatementConstants.STATEMENT_QUERY_ID.endsWith(statement.getId())){ //查询记录数！
+			SqlSource sqlSource = new QuerySqlSource(statement.getId(), statement.getConfiguration(), statement.getBoundSql(paramObject), paramObject);
+			BerriesUtils.setFieldValue(statement, "sqlSource", sqlSource);
+		}
+		if(StatementConstants.STATEMENT_QUERY_ROW_ID.endsWith(statement.getId())){ //查询记录数！
+			SqlSource sqlSource = new QuerySqlSource(statement.getId(), statement.getConfiguration(), statement.getBoundSql(paramObject), paramObject);
 			BerriesUtils.setFieldValue(statement, "sqlSource", sqlSource);
 		}
 		logger.info("statement:" + statement.getBoundSql(paramObject).getSql());

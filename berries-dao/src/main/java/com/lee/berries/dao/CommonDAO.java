@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import com.lee.berries.dao.search.BaseQuery;
+
 /**
  * DAO层的接口
  * @author Liuxianwei
@@ -56,6 +58,21 @@ public interface CommonDAO {
 	 * @return 记录结果包装
 	 */
 	public <T> Page<T> findPage(T object, Page<T> page);
+	
+	/**
+	 * 使用query组件查询记录数
+	 * @param query
+	 * @return
+	 */
+	public <T> int queryRow(BaseQuery<T> query);
+	
+	/**
+	 * 使用query组件进行查询
+	 * @param query
+	 * @param page
+	 * @return
+	 */
+	public <T> Page<T> query(BaseQuery<T> query, Page<T> page);
 	
 	/**
 	 * 跟Mapper中的配置进行查询
