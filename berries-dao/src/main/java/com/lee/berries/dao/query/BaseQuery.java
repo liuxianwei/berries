@@ -1,4 +1,4 @@
-package com.lee.berries.dao.search;
+package com.lee.berries.dao.query;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;

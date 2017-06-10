@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import com.lee.berries.dao.search.BaseQuery;
+import com.lee.berries.dao.query.BaseQuery;
 
 /**
  * DAO层的接口

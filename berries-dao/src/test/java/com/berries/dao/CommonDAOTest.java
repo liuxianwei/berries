@@ -6,7 +6,7 @@ import com.berries.test.BaseTest;
 import com.lee.berries.dao.CommonDAO;
 import com.lee.berries.dao.Page;
 import com.lee.berries.dao.po.UserDetails;
-import com.lee.berries.dao.search.UserQuery;
+import com.lee.berries.dao.query.UserQuery;
 
 public class CommonDAOTest extends BaseTest {
 

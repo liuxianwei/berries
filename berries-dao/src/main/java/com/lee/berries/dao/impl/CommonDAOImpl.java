@@ -16,7 +16,7 @@ import com.lee.berries.dao.Page;
 import com.lee.berries.dao.constants.StatementConstants;
 import com.lee.berries.dao.params.UpdateWithOptimisticLockParam;
 import com.lee.berries.dao.provider.IdNameProvider;
-import com.lee.berries.dao.search.BaseQuery;
+import com.lee.berries.dao.query.BaseQuery;
 
 @Component
 public class CommonDAOImpl implements CommonDAO {

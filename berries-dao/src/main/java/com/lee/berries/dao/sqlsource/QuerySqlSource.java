@@ -15,7 +15,7 @@ import com.lee.berries.dao.provider.IdNameProvider;
 import com.lee.berries.dao.provider.IdNameProviderImpl;
 import com.lee.berries.dao.provider.TableNameProvider;
 import com.lee.berries.dao.provider.TableNameProviderImpl;
-import com.lee.berries.dao.search.BaseQuery;
+import com.lee.berries.dao.query.BaseQuery;
 
 public class QuerySqlSource implements SqlSource {
 

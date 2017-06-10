@@ -1,4 +1,4 @@
-package com.lee.berries.dao.search;
+package com.lee.berries.dao.query;
 
 import com.lee.berries.dao.po.UserDetails;
 
