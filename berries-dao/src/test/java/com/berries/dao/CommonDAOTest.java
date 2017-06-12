@@ -54,7 +54,6 @@ public class CommonDAOTest extends BaseTest {
 	public void testQuery(){
 		CommonDAO testDAO = getBean(CommonDAO.class);
 		UserQuery query = new UserQuery();
-		query.setU_id(1L);
 		query.setOrder_u_id("desc");
 		testDAO.query(query, new Page<UserDetails>());
 	}

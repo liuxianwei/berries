@@ -130,8 +130,7 @@ public class CommonDAOImpl implements CommonDAO {
 		}
 		return page;
 	}
-	
-	
+		
 	@Override
 	public List<Map<String, Object>> list(String statementId, Object object) {
 		return sqlSessionTemplate.selectList(statementId, object);
@@ -157,9 +156,5 @@ public class CommonDAOImpl implements CommonDAO {
 	public <T> void remove(T object) {
 		sqlSessionTemplate.delete(StatementConstants.STATEMENT_DELETE_ID, object);
 	}
-	
-	
-
-	
 
 }

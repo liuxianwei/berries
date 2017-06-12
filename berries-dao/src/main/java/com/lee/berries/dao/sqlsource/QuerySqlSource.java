@@ -1,32 +1,15 @@
 package com.lee.berries.dao.sqlsource;
 
-import java.util.List;
-
 import org.apache.ibatis.mapping.BoundSql;
-import org.apache.ibatis.mapping.ParameterMapping;
-import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.session.Configuration;
 
 import com.lee.berries.common.utils.BerriesUtils;
 import com.lee.berries.dao.constants.StatementConstants;
-import com.lee.berries.dao.provider.ColumnNameProvider;
-import com.lee.berries.dao.provider.ColumnNameProviderImpl;
-import com.lee.berries.dao.provider.IdNameProvider;
-import com.lee.berries.dao.provider.IdNameProviderImpl;
-import com.lee.berries.dao.provider.TableNameProvider;
-import com.lee.berries.dao.provider.TableNameProviderImpl;
 import com.lee.berries.dao.query.BaseQuery;
 
-public class QuerySqlSource implements SqlSource {
+public class QuerySqlSource extends BaseSqlSource {
 
-	private Configuration configuration;
-	private BoundSql boundSql;
 	private String statementId;
-	private List<ParameterMapping> parameterMappings;
-	
-	protected static TableNameProvider tableNameProvider = new TableNameProviderImpl();
-	protected static ColumnNameProvider columnNameProvider = new ColumnNameProviderImpl();
-	protected static IdNameProvider idNameProvider = new IdNameProviderImpl();
 	
 	public QuerySqlSource(String statementId, Configuration configuration, BoundSql boundSql, Object object) {
 		this.statementId = statementId;
@@ -52,10 +35,5 @@ public class QuerySqlSource implements SqlSource {
 			//防御性容错
 		}
 		return sql;
-	}
-
-	@Override
-	public BoundSql getBoundSql(Object parameterObject) {
-		return boundSql;
 	}
 }
