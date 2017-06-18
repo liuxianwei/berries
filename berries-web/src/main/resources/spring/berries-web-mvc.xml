@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx" 
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd 
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context.xsd 
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/aop
+	   http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:config/*.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+    <!-- 配置扫描的包 -->
+    <context:component-scan base-package="com.lee.berries.web.controller" />
+  
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+    <!-- 全局异常处理 -->
+    <bean class="com.lee.berries.web.exception.BerriesExceptionResolver"/>
+    
+    <mvc:view-controller path="/" view-name="index"/>
+    <!-- 视图解析器 -->
+     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="order" value="1" />
+        <property name="ignoreAcceptHeader" value="true" />
+
+        <property name="defaultContentType" value="text/html" />
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json" />
+            </map>
+        </property>
+        <property name="viewResolvers">
+            <list>
+               <bean class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+			        <property name="contentType" value="text/html;charset=UTF-8" />  
+			       	<property name="dateToolAttribute" value="dateTool" />  
+			       	<property name="numberToolAttribute" value="numberTool" />
+			       	<!-- 此变量值为pageContext.request, 页面使用方法：rc.contextPath -->
+					<property name="requestContextAttribute" value="rc"/>  
+			       	<property name="exposeRequestAttributes" value="true" />  
+			       	<property name="exposeSessionAttributes" value="true" />
+			       	<property name="layoutUrl" value="/layout/default.html" /> 
+			       	<property name="suffix" value=".html"></property>
+        			<property name="toolboxConfigLocation" value="/WEB-INF/toolbox.xml"/>
+    			</bean>
+            </list>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <bean id="jsonView"
+                    class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+                    
+                    </bean>
+            </list>
+        </property>
+    </bean>
+   
+   <!-- 配置Velocity引擎 -->
+    <bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+       <property name="resourceLoaderPath"  value="/WEB-INF/pages" /><!-- 設置模板防止位置-->  
+       <property name="velocityProperties">  
+           <props>  
+               <prop key="input.encoding">UTF-8</prop><!-- 指定模板引擎进行模板处理的编码 -->  
+               <prop key="output.encoding">UTF-8</prop><!-- 指定输出流的编码 --> 
+           </props>  
+       </property>  
+    </bean>
+    
+    <!-- 约定化的controller配置 -->
+   	<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">
+       <property name="order" value="2"/>
+       <property name="basePackage" value="com.lee.berries.web.controller"></property>
+    </bean> 
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">  
+	   <property name="order" value="1"/>  
+	</bean>  
+    
+    <bean id="messageAdapter" class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">  
+       <property name="messageConverters">  
+           <list>  
+               <!-- Support JSON -->   
+			   <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+			   	<property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                    </list>
+                </property>
+			   </bean>   
+               <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+	               <property name="objectMapper">
+	                    <bean class="com.fasterxml.jackson.databind.ObjectMapper">
+	                        <property name="dateFormat">
+	                            <bean class="java.text.SimpleDateFormat">
+	                                <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/>
+	                            </bean>
+	                        </property>
+	                    </bean>
+	                </property>
+               </bean>
+           </list>  
+       </property>  
+   </bean>  
+   
+   <!-- 创建自定义日期转换规则 -->
+    <bean id="dateConvert" class="com.lee.berries.web.convert.DateConvert"/>
+    <bean id="dateToString" class="com.lee.berries.web.convert.DateToString"/>
+    
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**" />
+            <bean class="com.lee.berries.web.interceptor.BerriesInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    
+</beans>
