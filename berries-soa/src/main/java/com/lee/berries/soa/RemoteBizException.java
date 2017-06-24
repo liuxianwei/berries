@@ -7,7 +7,8 @@ import java.io.Serializable;
  * SOA调用业务标准错误异常
  */
 public class RemoteBizException extends RuntimeException implements Serializable {
-    /**
+	private static final long serialVersionUID = -8935013403212742471L;
+	/**
      * 错误代码
      */
     private int code;
