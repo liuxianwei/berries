@@ -13,6 +13,11 @@
 	<name>berries-web Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
+	   <dependency>
+	       <groupId>com.lee</groupId>
+	       <artifactId>berries-core</artifactId>
+	       <version>${project.parent.version}</version>
+	   </dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>

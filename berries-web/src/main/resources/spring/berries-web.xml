@@ -16,8 +16,7 @@
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
   	
-  	<import resource="classpath*:spring/berries-dao.xml"/>
-  	<import resource="classpath*:spring/berries-service.xml"/>
+  	<import resource="classpath*:spring/berries-core.xml"/>
 
 	<!-- 配置扫描的包 -->
     <context:component-scan base-package="com.lee.berries.web" />

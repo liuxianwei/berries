@@ -6,7 +6,7 @@
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<modules>
-		<module>berries-dao</module>
+		<module>berries-core</module>
 		<module>berries-common</module>
 		<module>berries-service</module>
 		<module>berries-cache</module>

@@ -112,7 +112,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**" />
-            <bean class="com.lee.berries.web.interceptor.BerriesInterceptor"></bean>
+            <bean class="${web.interceptor}"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
     

@@ -5,13 +5,13 @@
     <artifactId>berries</artifactId>
     <version>1.0.0</version>
   </parent>
-  <artifactId>berries-service</artifactId>
+  <artifactId>berries-core</artifactId>
   
   <dependencies>
     <dependency>
-            <groupId>com.lee</groupId>
-            <artifactId>berries-dao</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
+        <groupId>com.lee</groupId>
+        <artifactId>berries-common</artifactId>
+        <version>${project.parent.version}</version>
+    </dependency>
   </dependencies>
 </project>
