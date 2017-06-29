@@ -8,7 +8,6 @@
 	<modules>
 		<module>berries-core</module>
 		<module>berries-common</module>
-		<module>berries-service</module>
 		<module>berries-cache</module>
 		<module>berries-web</module>
 		<module>berries-soa</module>
@@ -270,4 +269,19 @@
 
 		</plugins>
 	</build>
+	
+	<profiles>
+        <profile>
+            <id>jdk-1.7</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <jdk>${jdk.version}</jdk>
+            </activation>
+            <properties>
+                <maven.compiler.source>${jdk.version}</maven.compiler.source>
+                <maven.compiler.target>${jdk.version}</maven.compiler.target>
+                <maven.compiler.compilerVersion>${jdk.version}</maven.compiler.compilerVersion>
+            </properties>
+        </profile>
+    </profiles>
 </project>
