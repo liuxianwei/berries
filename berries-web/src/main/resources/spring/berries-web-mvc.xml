@@ -62,10 +62,7 @@
         </property>
         <property name="defaultViews">
             <list>
-                <bean id="jsonView"
-                    class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
-                    
-                    </bean>
+                <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
             </list>
         </property>
     </bean>
@@ -101,16 +98,8 @@
                     </list>
                 </property>
 			   </bean>   
-               <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-	               <property name="objectMapper">
-	                    <bean class="com.fasterxml.jackson.databind.ObjectMapper">
-	                        <property name="dateFormat">
-	                            <bean class="java.text.SimpleDateFormat">
-	                                <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/>
-	                            </bean>
-	                        </property>
-	                    </bean>
-	                </property>
+                <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+                   <property name="objectMapper" ref="customerObjectMapper"/>
                </bean>
            </list>  
        </property>  
@@ -118,7 +107,7 @@
    
    <!-- 创建自定义日期转换规则 -->
     <bean id="dateConvert" class="com.lee.berries.web.convert.DateConvert"/>
-    <bean id="dateToString" class="com.lee.berries.web.convert.DateToString"/>
+    <bean id="customerObjectMapper" class="com.lee.berries.web.convert.CustomerObjectMapper"/>
     
     <mvc:interceptors>
         <mvc:interceptor>

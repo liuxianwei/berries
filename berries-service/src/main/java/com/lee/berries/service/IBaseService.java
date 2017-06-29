@@ -96,7 +96,7 @@ public interface IBaseService {
 	 * @param lock 乐观锁中除去id条件之外的条件对象
 	 * @return
 	 */
-	public <T> int updateWithOptimisticLock(T update, T lock);
+	public <T> int updateWithOptimisticLock(T update, String ...lockFields);
 	
 	/**
 	 * 从数据库中删除一个对象

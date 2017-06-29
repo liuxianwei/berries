@@ -77,8 +77,8 @@ public abstract class BaseServiceImpl implements IBaseService {
 	}
 
 	@Override
-	public <T> int updateWithOptimisticLock(T update, T lock) {
-		return commonDao.updateWithOptimisticLock(update, lock);
+	public <T> int updateWithOptimisticLock(T update, String ...lockFields) {
+		return commonDao.updateWithOptimisticLock(update, lockFields);
 	}
 
 	@Override
