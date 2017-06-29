@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.mapping.ParameterMapping.Builder;
@@ -28,7 +29,7 @@ public class UpdateWithOptimisticLockSqlSource extends BaseSqlSource {
 	private String initSQL(Object object){
 		UpdateWithOptimisticLockParam<?> updateObject = (UpdateWithOptimisticLockParam<?>) object;
 		Object update = updateObject.getUpdate();
-		Object lock = updateObject.getLock();
+		String[] lockFields = updateObject.getLockFields();
 		parameterMappings = new ArrayList<ParameterMapping>();
 		String sql = SQL;
 		parameterObject = new HashMap<String,Object>();
@@ -61,20 +62,16 @@ public class UpdateWithOptimisticLockSqlSource extends BaseSqlSource {
 			parameterMappings.add(parameterMapping);
 			parameterObject.put(idFieldName, idValue);
 			
-			for(Field field:lock.getClass().getDeclaredFields()){
-				if(!field.getName().equals("serialVersionUID") 
-						&& !field.getName().equals(idFieldName)){
-					field.setAccessible(true);
-					Object value = field.get(lock);
-					if(value != null){
-						String column = columnNameProvider.getColumnName(field.getName());
-						String key = "optimistickLock_" + field.getName();
-						sql += " and " + column + "=?";
-						Builder builderLock = new Builder(configuration, key , field.getType());
-						ParameterMapping parameterMappingLock = builderLock.build();
-						parameterMappings.add(parameterMappingLock);
-						parameterObject.put(key, value);
-					}
+			for(String fieldName:lockFields){
+				Object value = BeanUtils.getProperty(update, fieldName);
+				if(value != null){
+					String column = columnNameProvider.getColumnName(fieldName);
+					String key = "optimistickLock_" + fieldName;
+					sql += " and " + column + "<?";
+					Builder builderLock = new Builder(configuration, key , value.getClass());
+					ParameterMapping parameterMappingLock = builderLock.build();
+					parameterMappings.add(parameterMappingLock);
+					parameterObject.put(key, value);
 				}
 			}
 			

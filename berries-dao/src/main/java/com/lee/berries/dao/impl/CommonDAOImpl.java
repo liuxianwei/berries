@@ -27,6 +27,8 @@ public class CommonDAOImpl implements CommonDAO {
 	@Autowired
 	private IdNameProvider idNameProvider;
 	
+	public static final String DEFAULT_LOCK_NAME = "version"; //乐观锁默认锁变量名称
+	
 	@Override
 	public <T> T get(Class<T> classzz, Serializable id) {
 		T target = null;
@@ -147,8 +149,14 @@ public class CommonDAOImpl implements CommonDAO {
 	}
 
 	@Override
-	public <T> int updateWithOptimisticLock(T update, T lock) {
-		UpdateWithOptimisticLockParam<T> object = new UpdateWithOptimisticLockParam<T>(update, lock);
+	public <T> int updateWithOptimisticLock(T update, String ...lockFields) {
+		UpdateWithOptimisticLockParam<T> object = null;
+		if(lockFields == null || lockFields.length == 0){
+			object = new UpdateWithOptimisticLockParam<T>(update, DEFAULT_LOCK_NAME);
+		}
+		else{
+			object = new UpdateWithOptimisticLockParam<T>(update, lockFields);
+		}
 		return sqlSessionTemplate.update(StatementConstants.STATEMENT_UPDATEWITHOPTIMISTICLOCK_ID, object);
 	}
 	

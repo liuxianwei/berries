@@ -14,15 +14,15 @@ public class UpdateWithOptimisticLockParam<T> {
 	private T update;
 	
 	/**
-	 * 老数据存放，这里一般存除过id意外的一个或者多个锁变量旧值
+	 * 锁变量对应的字段名称
 	 */
-	private T lock;
+	private String[] lockFields;
 	
 	public UpdateWithOptimisticLockParam(){}
 	
-	public UpdateWithOptimisticLockParam(T update, T lock){
+	public UpdateWithOptimisticLockParam(T update, String... lockFields){
 		this.update = update;
-		this.lock = lock;
+		this.lockFields = lockFields;
 	}
 
 	public T getUpdate() {
@@ -32,13 +32,13 @@ public class UpdateWithOptimisticLockParam<T> {
 	public void setUpdate(T update) {
 		this.update = update;
 	}
-
-	public T getLock() {
-		return lock;
+	
+	public String[] getLockFields() {
+		return lockFields;
 	}
 
-	public void setLock(T lock) {
-		this.lock = lock;
+	public void setLockFields(String[] lockFields) {
+		this.lockFields = lockFields;
 	}
 
 	

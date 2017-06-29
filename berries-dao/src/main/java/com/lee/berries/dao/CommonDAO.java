@@ -97,10 +97,10 @@ public interface CommonDAO {
 	/**
 	 * 更新对象带乐观锁
 	 * @param update 要更新的数据，为空的不更新
-	 * @param lock 乐观锁中除去id条件之外的条件对象
+	 * @param lockFields 锁变量对应的字段名称,如果为null的话，默认使用version作为锁变量
 	 * @return
 	 */
-	public <T> int updateWithOptimisticLock(T update, T lock);
+	public <T> int updateWithOptimisticLock(T update, String ...lockFields);
 	
 	/**
 	 * 从数据库中删除一个对象

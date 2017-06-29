@@ -36,9 +36,9 @@ public class CommonDAOTest extends BaseTest {
 		lock.setVersion(user.getVersion());
 		user.setUserName("23424");
 		user.setVersion(user.getVersion()+1);
-		int count = testDAO.updateWithOptimisticLock(user, lock);
+		int count = testDAO.updateWithOptimisticLock(user);
 		user.setUserName("第二次名称");
-		int count2 = testDAO.updateWithOptimisticLock(user, lock);
+		int count2 = testDAO.updateWithOptimisticLock(user);
 		System.out.println(count + ":" + count2);
 	}
 	
