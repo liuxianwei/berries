@@ -1,8 +1,9 @@
 package com.lee.berries.soa;
 
 /**
- * @author 黄奕鹏
- * 所有远程接口都需要继承这个接口
+ * Dubbo服务接口，需要进行Dubbo注册的服务需要实现这个接口
+ * @author Liuxianwei
+ *
  */
 public interface SOARemote {
   

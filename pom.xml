@@ -12,6 +12,7 @@
 		<module>berries-web</module>
 		<module>berries-soa</module>
 		<module>berries-task</module>
+		<module>berries-microservice</module>
 	</modules>
 
 	<properties>
