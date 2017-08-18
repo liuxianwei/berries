@@ -21,7 +21,7 @@
 	<!-- 配置扫描的包 -->
     <context:component-scan base-package="com.lee.berries.web" />
     
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <bean id="propertyConfigurer" class="com.lee.berries.web.config.BerriesPlaceholderConfigurer">
 		<property name="locations">
 			<list>
 				<value>classpath*:config/*.properties</value>

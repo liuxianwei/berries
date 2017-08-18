@@ -19,7 +19,7 @@
 		<jdk.version>1.7</jdk.version>
 		<encoding.version>UTF-8</encoding.version>
 		<junit.version>4.11</junit.version>
-		<spring.version>4.0.4.RELEASE</spring.version>
+		<spring.version>4.3.10.RELEASE</spring.version>
 		<mysql.version>5.1.14</mysql.version>
 		<junit.version>4.11</junit.version>
 		<velocity.version>1.7</velocity.version>

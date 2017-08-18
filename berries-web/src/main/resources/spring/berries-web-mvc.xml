@@ -17,7 +17,7 @@
        http://www.springframework.org/schema/aop
 	   http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <bean id="propertyConfigurer" class="com.lee.berries.web.config.BerriesPlaceholderConfigurer">
 		<property name="locations">
 			<list>
 				<value>classpath:config/*.properties</value>
