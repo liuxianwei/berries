@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AppMapper">
+    <update id="appIn">
+    	insert into ad_app (id,app_id,app_name)
+    	 select 10001, 1000223,'ssd' from dual
+    </update>
+    
+    <update id="t">
+    	insert into ad_app 
+		(user_id,nick_name,sex,head_img,score,ranking_Value,date_value) 
+		select
+		t1.user_id,t2.nick_name,t2.sex,t2.head_img,t1.score,(@rowNO :=
+		@rowNo+1),#{dateValue} from (SELECT @rowNO :=0) money,(select
+		user_id,sum(score) as score from user_score_details where changed_Time
+		<![CDATA[ > ]]>
+		#{startDate} and changed_Time
+		<![CDATA[ < ]]>
+		#{endDate} GROUP BY user_id ORDER BY score DESC) t1 LEFT
+		JOIN
+		user_score t2 on t1.user_id = t2.user_id
+    </update>
+</mapper>

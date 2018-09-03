@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE generatorConfiguration  
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"  
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">  
+  
+<generatorConfiguration>  
+    <classPathEntry location="E:/java/apache-maven-3.5.0/repo/mysql/mysql-connector-java/5.1.14/mysql-connector-java-5.1.14.jar" /><!--驱动包的绝对路径-->  
+      <context id="DB2Tables" targetRuntime="MyBatis3"><!--生成映射的类型，也可以生成ibatis的。具体参看mybatis-generator-->
+
+       <commentGenerator type="BerriesCommentGenerator"><!--具体参看mybatis-generator-->
+             <property name="suppressDate" value="true"/>
+        	 <property name="suppressAllComments" value="false" /> 
+        </commentGenerator>  
+  
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"  
+            connectionURL="jdbc:mysql://192.168.5.52:3306/sso"
+            userId="root" password="NZY8s5Su"><!--数据库连接信息。具体参看mybatis-generator-->  
+             <property name="useInformationSchema" value="true"></property>
+        </jdbcConnection>  
+  
+        <javaTypeResolver><!--具体参看mybatis-generator-->  
+            <property name="forceBigDecimals" value="false" />  
+        </javaTypeResolver>  
+  
+	<!--以下三个标签主要解析targetPackage和targetProject。其它的具体参看mybatis-generator-->
+
+	<!--targetPackage，是生成文件所在的包路径-->
+
+	<!--targetProject，是相对于本xml配置文件的相对路径，是targetPackage包路径的父级目录。-->
+
+        <javaModelGenerator targetPackage="com.bxjh.sso.dao.po" targetProject="src/main/java">  
+            <property name="enableSubPackages" value="true" />  
+            <property name="trimStrings" value="true" />  
+        </javaModelGenerator>  
+  
+        <sqlMapGenerator targetPackage="mybatis.mapper" targetProject="src/main/resources">  
+            <property name="enableSubPackages" value="true" />  
+        </sqlMapGenerator>  
+        
+        <table tableName="sso_app" domainObjectName="App"
+        	enableInsert="false" 
+       		enableSelectByExample="false"
+        	enableUpdateByPrimaryKey="false"
+        	enableDeleteByPrimaryKey="false"
+        	enableDeleteByExample="false"
+        	enableCountByExample="false"
+        	enableUpdateByExample="false">
+        </table>
+        
+  		<!-- <table tableName="sso_app" domainObjectName="App"
+        	enableInsert="false" 
+       		enableSelectByExample="false"
+        	enableUpdateByPrimaryKey="false"
+        	enableDeleteByPrimaryKey="false"
+        	enableDeleteByExample="false"
+        	enableCountByExample="false"
+        	enableUpdateByExample="false">
+        </table>
+        
+        <table tableName="sso_module" domainObjectName="Module"
+        	enableInsert="false" 
+       		enableSelectByExample="false"
+        	enableUpdateByPrimaryKey="false"
+        	enableDeleteByPrimaryKey="false"
+        	enableDeleteByExample="false"
+        	enableCountByExample="false"
+        	enableUpdateByExample="false">
+        </table>
+        
+		
+		<table tableName="sso_module_access_uri" domainObjectName="ModuleAccessUri"
+        	enableInsert="false" 
+       		enableSelectByExample="false"
+        	enableUpdateByPrimaryKey="false"
+        	enableDeleteByPrimaryKey="false"
+        	enableDeleteByExample="false"
+        	enableCountByExample="false"
+        	enableUpdateByExample="false">
+        </table>
+        
+        <table tableName="sso_role" domainObjectName="Role"
+        	enableInsert="false" 
+       		enableSelectByExample="false"
+        	enableUpdateByPrimaryKey="false"
+        	enableDeleteByPrimaryKey="false"
+        	enableDeleteByExample="false"
+        	enableCountByExample="false"
+        	enableUpdateByExample="false">
+        </table>
+        
+        <table tableName="sso_role_exclude" domainObjectName="RoleExclude"
+        	enableInsert="false" 
+       		enableSelectByExample="false"
+        	enableUpdateByPrimaryKey="false"
+        	enableDeleteByPrimaryKey="false"
+        	enableDeleteByExample="false"
+        	enableCountByExample="false"
+        	enableUpdateByExample="false">
+        </table>
+        
+        <table tableName="sso_role_module" domainObjectName="RoleModule"
+        	enableInsert="false" 
+       		enableSelectByExample="false"
+        	enableUpdateByPrimaryKey="false"
+        	enableDeleteByPrimaryKey="false"
+        	enableDeleteByExample="false"
+        	enableCountByExample="false"
+        	enableUpdateByExample="false">
+        </table>
+        
+        <table tableName="sso_user_role" domainObjectName="UserRole"
+        	enableInsert="false" 
+       		enableSelectByExample="false"
+        	enableUpdateByPrimaryKey="false"
+        	enableDeleteByPrimaryKey="false"
+        	enableDeleteByExample="false"
+        	enableCountByExample="false"
+        	enableUpdateByExample="false">
+        </table>
+        
+        <table tableName="sso_user_type" domainObjectName="UserType"
+        	enableInsert="false" 
+       		enableSelectByExample="false"
+        	enableUpdateByPrimaryKey="false"
+        	enableDeleteByPrimaryKey="false"
+        	enableDeleteByExample="false"
+        	enableCountByExample="false"
+        	enableUpdateByExample="false">
+        </table> -->
+        
+        
+        
+		<!--与原来mybatis-generator不一样，这个table标签不是必须的。只有对生成的映射有复杂要求时，才需要在这里详细配置-->
+		
+		<!-- <table tableName="sso_user" domainObjectName="User"
+        	enableInsert="false" 
+       		enableSelectByExample="false"
+        	enableUpdateByPrimaryKey="false"
+        	enableDeleteByPrimaryKey="false"
+        	enableDeleteByExample="false"
+        	enableCountByExample="false"
+        	enableUpdateByExample="false">
+        </table>
+        
+        <table tableName="sso_user_login" domainObjectName="UserLogin"
+        	enableInsert="false" 
+       		enableSelectByExample="false"
+        	enableUpdateByPrimaryKey="false"
+        	enableDeleteByPrimaryKey="false"
+        	enableDeleteByExample="false"
+        	enableCountByExample="false"
+        	enableUpdateByExample="false">
+        </table>
+        
+        <table tableName="sso_site" domainObjectName="Site"
+        	enableInsert="false" 
+       		enableSelectByExample="false"
+        	enableUpdateByPrimaryKey="false"
+        	enableDeleteByPrimaryKey="false"
+        	enableDeleteByExample="false"
+        	enableCountByExample="false"
+        	enableUpdateByExample="false">
+        </table>
+        
+        <table tableName="sso_site_login_type" domainObjectName="SiteLoginType"
+        	enableInsert="false" 
+       		enableSelectByExample="false"
+        	enableUpdateByPrimaryKey="false"
+        	enableDeleteByPrimaryKey="false"
+        	enableDeleteByExample="false"
+        	enableCountByExample="false"
+        	enableUpdateByExample="false">
+        </table>
+        
+        <table tableName="sso_login_type" domainObjectName="LoginType"
+        	enableInsert="false" 
+       		enableSelectByExample="false"
+        	enableUpdateByPrimaryKey="false"
+        	enableDeleteByPrimaryKey="false"
+        	enableDeleteByExample="false"
+        	enableCountByExample="false"
+        	enableUpdateByExample="false">
+        </table> -->
+
+      </context>  
+</generatorConfiguration> 

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/aop
+	   					http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+	<!-- 启用注解 -->
+	<context:annotation-config />
+
+	<context:component-scan base-package="com.lee.berries.dao" />
+	<context:component-scan base-package="com.lee.berries.service" />
+	<context:component-scan base-package="com.lee.berries.datasource" />
+	<context:component-scan base-package="com.lee.berries.router" />
+
+	<bean id="dataSource" class="com.lee.berries.datasource.BerriesDataSource"
+		init-method="init" destroy-method="close">
+		
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="weight" value="${jdbc.weight:}" />
+
+		<property name="filters" value="${jdbc.filters:stat}" />
+
+		<property name="maxActive" value="${jdbc.maxActive:5}" />
+		<property name="initialSize" value="${jdbc.initialSize:1}" />
+		<property name="maxWait" value="60000" />
+		<property name="minIdle" value="1" />
+
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+
+		<property name="poolPreparedStatements" value="true" />
+		<property name="maxOpenPreparedStatements" value="${jdbc.maxOpenPreparedStatements:6}" />
+
+		<property name="asyncInit" value="true" />
+	</bean>
+
+	<!-- 自动扫描mapper.xml文件 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations">
+			<list>
+				<value>classpath*:mybatis/mapper/*.xml</value>
+			</list>
+		</property>
+		<property name="typeAliasesPackage" value="com.lee.berries.dao.po" />
+		<property name="plugins">
+			<array>
+				<bean class="com.lee.berries.dao.plugin.QueryPlugin"></bean>
+				<bean class="com.lee.berries.dao.plugin.UpdatePlugin"></bean>
+			</array>
+		</property>
+	</bean>
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+		<constructor-arg ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="dataSourceAspect" class="com.lee.berries.datasource.aop.DataSourceAspect">
+		<property name="needWriteMethod" value="${datasource.needWriteMethod:add,save,update,delete,insert,do}"/>
+	</bean>
+	
+	<!-- aop配置 -->
+	<aop:config proxy-target-class="true">
+		<!--切面 -->
+		<aop:aspect ref="dataSourceAspect" order="0">
+			<!-- 切点 -->
+			<aop:pointcut expression="${datasource.expression}" id="datasourcePointcut" />
+			<!--连接通知方法与切点 -->
+			<aop:before method="before" pointcut-ref="datasourcePointcut" />
+			<aop:after method="after" pointcut-ref="datasourcePointcut" />
+		</aop:aspect>
+	</aop:config>
+</beans>

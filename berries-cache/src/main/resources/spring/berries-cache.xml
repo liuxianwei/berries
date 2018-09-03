@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/cache 
+						http://www.springframework.org/schema/cache/spring-cache.xsd">
+	
+	<cache:annotation-driven />
+	<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">  
+        <property name="maxIdle" value="${redis.maxIdle}" />  
+        <property name="maxActive" value="${redis.maxActive}" />  
+        <property name="maxWait" value="${redis.maxWait}" />  
+        <property name="testOnBorrow" value="${redis.testOnBorrow}" />  
+    </bean>  
+      
+    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="hostName"   value="${redis.host}" />  
+        <property name="port"       value="${redis.port}" />  
+        <property name="password"   value="${redis.pass}" />
+        <property name="database"   value="${redis.database}" />  
+        <property name="poolConfig" ref="poolConfig" />  
+    </bean>  
+      
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">  
+        <property name="connectionFactory"   ref="connectionFactory" /> 
+    </bean>  
+    
+    <bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+        <constructor-arg index="0" ref="redisTemplate" />
+        <property name="defaultExpiration" value="${redis.expiration}" />
+    </bean>
+
+</beans>
