@@ -211,6 +211,21 @@ public class BerriesCommentGenerator implements CommentGenerator {
 	    //      addJavadocTag(method, false);
 
 	    method.addJavaDocLine(" */");
+	    
+	    String columnName = introspectedColumn.getActualColumnName();
+	    boolean isPrimaryKey = false;
+	    for(IntrospectedColumn primaryKeyColumns : introspectedTable.getPrimaryKeyColumns()) {
+	    	if(primaryKeyColumns.getActualColumnName().equals(columnName)) {
+	    		isPrimaryKey = true;
+	    		break;
+	    	}
+	    }
+	    if(isPrimaryKey) {
+	    	method.addAnnotation("@Id(name = \"" + introspectedColumn.getActualColumnName() + "\")");
+	    }
+	    else {
+	    	method.addAnnotation("@Column(name = \"" + introspectedColumn.getActualColumnName() + "\")");
+	    }
 	}
 
 	public void addSetterComment(Method method, IntrospectedTable introspectedTable,
@@ -271,7 +286,9 @@ public class BerriesCommentGenerator implements CommentGenerator {
 
 	
 	public void addModelClassComment(TopLevelClass topClass, IntrospectedTable introspectedTable) {
+		topClass.addImportedType("com.lee.berries.dao.annotation.Id");
 		topClass.addImportedType("com.lee.berries.dao.annotation.Entity");
+		topClass.addImportedType("com.lee.berries.dao.annotation.Column");
     	topClass.addAnnotation("@Entity(tableName = \"" + introspectedTable.getFullyQualifiedTable().getIntrospectedTableName() + "\")");
 	}
 

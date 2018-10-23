@@ -1,6 +1,5 @@
 package com.lee.berries.dao.sqlsource;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import org.apache.ibatis.mapping.BoundSql;
@@ -8,6 +7,7 @@ import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.mapping.ParameterMapping.Builder;
 import org.apache.ibatis.session.Configuration;
 
+import com.lee.berries.dao.annotation.support.MethodMapper;
 import com.lee.berries.dao.params.DeleteParam;
 
 public class DeleteSqlSource extends BaseSqlSource {
@@ -27,25 +27,23 @@ public class DeleteSqlSource extends BaseSqlSource {
 		String sql = SQL;
 		sql = sql.replace("{tableName}", tableNameProvider.getTableName(paramObject.getClass()));
 		try{
-			String idFieldName = idNameProvider.getIdName(paramObject.getClass());
-			Field idField = paramObject.getClass().getDeclaredField(idFieldName);
-			Builder builder = new Builder(configuration, idFieldName , idField.getType());
+			MethodMapper idMapper = idNameProvider.getIdName(paramObject.getClass());
+			Builder builder = new Builder(configuration, idMapper.getFieldName() , idMapper.getMethod().getReturnType());
 			ParameterMapping parameterMapping = builder.build();
 			parameterMappings.add(parameterMapping);
 			StringBuilder where = new StringBuilder(200);
 			if(deleteParam.getFields() != null && deleteParam.getFields().length > 0) {
 				for(String f:deleteParam.getFields()) {
-					Field field = paramObject.getClass().getDeclaredField(f);
-					String fieldName = columnNameProvider.getColumnName(f);
+					MethodMapper mapper = columnNameProvider.getColumnMapper(paramObject.getClass(), f);
 					where.append("and ")
-						.append(fieldName)
+						.append(mapper.getColumnName())
 						.append("=? ");
-					Builder fieldbuilder = new Builder(configuration, f , field.getType());
+					Builder fieldbuilder = new Builder(configuration, f , mapper.getMethod().getReturnType());
 					ParameterMapping fieldParameterMapping = fieldbuilder.build();
 					parameterMappings.add(fieldParameterMapping);
 				}
 			}
-			sql = sql.replace("{idFieldName}", idFieldName);
+			sql = sql.replace("{idFieldName}", idMapper.getColumnName());
 			sql = sql.replace("{where}", where.toString());
 			
 			this.boundSql = new BoundSql(configuration, sql, parameterMappings, paramObject);

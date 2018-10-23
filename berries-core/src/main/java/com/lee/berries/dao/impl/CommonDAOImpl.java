@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.lee.berries.common.utils.ReflectUtils;
 import com.lee.berries.dao.CommonDAO;
 import com.lee.berries.dao.Page;
+import com.lee.berries.dao.annotation.support.MethodMapper;
 import com.lee.berries.dao.constants.StatementConstants;
 import com.lee.berries.dao.id.IdWorkFactory;
 import com.lee.berries.dao.params.DeleteByIdsParam;
@@ -43,7 +44,7 @@ public class CommonDAOImpl implements CommonDAO {
 		T target = null;
 		try{
 			target = classzz.newInstance();
-			BeanUtils.setProperty(target, idNameProvider.getIdName(classzz), id);
+			BeanUtils.setProperty(target, idNameProvider.getIdName(classzz).getFieldName(), id);
 		}
 		catch(Exception e){
 			//防御性容错
@@ -175,12 +176,12 @@ public class CommonDAOImpl implements CommonDAO {
 	@Override
 	public <T> void save(T object) {
 		try {
-			String idFieldName = ProviderFactory.getIdNameProvider().getIdName(object.getClass());
-			Object idValue = BeanUtils.getProperty(object, idFieldName);
+			MethodMapper idMapper = ProviderFactory.getIdNameProvider().getIdName(object.getClass());
+			Object idValue = idMapper.getValue(object);
 			if(idValue == null) {
-				BeanUtils.setProperty(object, idFieldName, IdWorkFactory.get().nextId());
+				BeanUtils.setProperty(object, idMapper.getFieldName(), IdWorkFactory.get().nextId());
 			}
-		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+		} catch (IllegalAccessException | InvocationTargetException e) {
 			
 		}
 		sqlSessionTemplate.insert(StatementConstants.STATEMENT_SAVE_ID, object);
@@ -190,12 +191,12 @@ public class CommonDAOImpl implements CommonDAO {
 	public <T> int save(T object, String... whereFieldNames) {
 		SaveWithWhereParam<T> saveWithWhereParam = new SaveWithWhereParam<T>(object, whereFieldNames);
 		try {
-			String idFieldName = ProviderFactory.getIdNameProvider().getIdName(object.getClass());
-			Object idValue = BeanUtils.getProperty(object, idFieldName);
+			MethodMapper idMapper = ProviderFactory.getIdNameProvider().getIdName(object.getClass());
+			Object idValue = idMapper.getValue(object);
 			if(idValue == null) {
-				BeanUtils.setProperty(object, idFieldName, IdWorkFactory.get().nextId());
+				BeanUtils.setProperty(object, idMapper.getFieldName(), IdWorkFactory.get().nextId());
 			}
-		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+		} catch (IllegalAccessException | InvocationTargetException e) {
 			
 		}
 		return sqlSessionTemplate.insert(StatementConstants.STATEMENT_SAVE_WITH_WHERE_ID, saveWithWhereParam);

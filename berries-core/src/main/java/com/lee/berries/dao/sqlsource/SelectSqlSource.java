@@ -1,6 +1,5 @@
 package com.lee.berries.dao.sqlsource;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import org.apache.ibatis.mapping.BoundSql;
@@ -8,6 +7,9 @@ import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.mapping.ParameterMapping.Builder;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.RowBounds;
+
+import com.lee.berries.dao.annotation.support.BerriesAnnotationSupport;
+import com.lee.berries.dao.annotation.support.MethodMapper;
 
 public class SelectSqlSource extends BaseSqlSource {
 	
@@ -28,23 +30,21 @@ public class SelectSqlSource extends BaseSqlSource {
 		sqlBuffer.append(SQL);
 		try{
 			StringBuilder fields = new StringBuilder(500);
-			for(Field field:object.getClass().getDeclaredFields()){
-				if(!field.getName().equals("serialVersionUID")){
-					String column = columnNameProvider.getColumnName(field.getName());
-					fields.append(",t.");
-					fields.append(column);
-					fields.append(" as ");
-					fields.append(field.getName());
-					field.setAccessible(true);
-					Object value = field.get(object);
-					if(value != null){
-						sqlBuffer.append(" and t.");
-						sqlBuffer.append(column);
-						sqlBuffer.append("=?");
-						Builder builder = new Builder(configuration, field.getName() , field.getType());
-						ParameterMapping parameterMapping = builder.build();
-						parameterMappings.add(parameterMapping);
-					}
+			
+			for(MethodMapper mapper : BerriesAnnotationSupport.getInstance().getMethodMapper(object.getClass())){
+				String column = mapper.getColumnName();
+				fields.append(",t.");
+				fields.append(column);
+				fields.append(" as ");
+				fields.append(mapper.getFieldName());
+				Object value = mapper.getValue(object);
+				if(value != null){
+					sqlBuffer.append(" and t.");
+					sqlBuffer.append(column);
+					sqlBuffer.append("=?");
+					Builder builder = new Builder(configuration, mapper.getFieldName(), mapper.getMethod().getReturnType());
+					ParameterMapping parameterMapping = builder.build();
+					parameterMappings.add(parameterMapping);
 				}
 			}
 			if(rowBounds != null && !rowBounds.equals(RowBounds.DEFAULT)) {

@@ -1,6 +1,5 @@
 package com.lee.berries.dao.sqlsource;
 
-import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,6 +11,8 @@ import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.mapping.ParameterMapping.Builder;
 import org.apache.ibatis.session.Configuration;
 
+import com.lee.berries.dao.annotation.support.BerriesAnnotationSupport;
+import com.lee.berries.dao.annotation.support.MethodMapper;
 import com.lee.berries.dao.params.SaveWithWhereParam;
 
 public class SaveWithWhereSqlSource extends BaseSqlSource {
@@ -34,24 +35,20 @@ public class SaveWithWhereSqlSource extends BaseSqlSource {
 			StringBuilder fields = new StringBuilder(100);
 			StringBuilder values = new StringBuilder(100);
 			StringBuilder wheres = new StringBuilder(300);
-			for(Field field:param.getTarget().getClass().getDeclaredFields()){
-				if(!field.getName().equals("serialVersionUID")){
-					field.setAccessible(true);
-					Object value = field.get(param.getTarget());
-					if(value != null){
-						String column = columnNameProvider.getColumnName(field.getName());
-						fields.append(", ");
-						fields.append(column);
-						
-						values.append(",'");
-						values.append(getValue(value));
-						values.append("'");
-						
-						addWhere(wheres, field, value, param.getWhereFields());
-					}
+			for(MethodMapper mapper : BerriesAnnotationSupport.getInstance().getMethodMapper(param.getTarget().getClass())) {
+				Object value = mapper.getValue(param.getTarget().getClass());
+				if(value != null){
+					String column = mapper.getColumnName();
+					fields.append(", ");
+					fields.append(column);
+					
+					values.append(",'");
+					values.append(getValue(value));
+					values.append("'");
+					
+					addWhere(wheres, mapper, value, param);
 				}
 			}
-			
 			
 			sql = sql.replace("{fields}", fields.substring(1));
 			sql = sql.replace("{values}", values.substring(1));
@@ -76,15 +73,15 @@ public class SaveWithWhereSqlSource extends BaseSqlSource {
 		return value;
 	}
 	
-	private void addWhere(StringBuilder where, Field field, Object value, String[] whereFields) {
-		for(String whereFieldName:whereFields) {
-			if(whereFieldName.equals(field.getName())) {
+	private void addWhere(StringBuilder where, MethodMapper methodMapper, Object value, SaveWithWhereParam<?> param) {
+		for(String whereFieldName : param.getWhereFields()) {
+			if(whereFieldName.equals(methodMapper.getFieldName())) {
 				String key = whereFieldName;
-				String column = columnNameProvider.getColumnName(field.getName());
+				String column = methodMapper.getColumnName();
 				where.append(" and ");
 				where.append(column);
 				where.append(" =? ");
-				Builder builder = new Builder(configuration, key, field.getType());
+				Builder builder = new Builder(configuration, key, methodMapper.getMethod().getReturnType());
 				ParameterMapping parameterMapping = builder.build();
 				parameterMappings.add(parameterMapping);
 				parameterObject.put(key, value);

@@ -1,12 +1,14 @@
 package com.lee.berries.dao.sqlsource;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.mapping.ParameterMapping.Builder;
 import org.apache.ibatis.session.Configuration;
+
+import com.lee.berries.dao.annotation.support.BerriesAnnotationSupport;
+import com.lee.berries.dao.annotation.support.MethodMapper;
 
 public class UpdateSqlSource extends BaseSqlSource {
 	
@@ -24,28 +26,26 @@ public class UpdateSqlSource extends BaseSqlSource {
 		sql = sql.replace("{tableName}", tableNameProvider.getTableName(object.getClass()));
 		try{
 			StringBuilder setFields = new StringBuilder(500);
-			String idFieldName = idNameProvider.getIdName(object.getClass());
-			for(Field field:object.getClass().getDeclaredFields()){
-				if(!field.getName().equals("serialVersionUID") 
-						&& !field.getName().equals(idFieldName)){
-					field.setAccessible(true);
-					Object value = field.get(object);
+			MethodMapper idMapper = idNameProvider.getIdName(object.getClass());
+			String idFieldName = idMapper.getFieldName();
+			for(MethodMapper methodMapper : BerriesAnnotationSupport.getInstance().getMethodMapper(object.getClass())) {
+				if(!idFieldName.equals(methodMapper.getFieldName())) {
+					Object value = methodMapper.getValue(object);
 					if(value != null){
-						String column = columnNameProvider.getColumnName(field.getName());
+						String column = methodMapper.getColumnName();
 						setFields.append(", ");
 						setFields.append(column);
 						setFields.append("=?");
-						Builder builder = new Builder(configuration, field.getName() , field.getType());
+						Builder builder = new Builder(configuration, methodMapper.getFieldName() , methodMapper.getMethod().getReturnType());
 						ParameterMapping parameterMapping = builder.build();
 						parameterMappings.add(parameterMapping);
 					}
 				}
 			}
-			Field idField = object.getClass().getDeclaredField(idFieldName);
-			Builder builder = new Builder(configuration, idFieldName , idField.getType());
+			Builder builder = new Builder(configuration, idMapper.getFieldName() , idMapper.getMethod().getReturnType());
 			ParameterMapping parameterMapping = builder.build();
 			parameterMappings.add(parameterMapping);
-			sql += idFieldName + "=?";
+			sql += idMapper.getColumnName() + "=?";
 			sql = sql.replace("{setFields}", setFields.substring(1));
 			this.boundSql = new BoundSql(configuration, sql, parameterMappings, object);
 		}

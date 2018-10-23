@@ -9,9 +9,7 @@
 		<module>berries-core</module>
 		<module>berries-common</module>
 		<module>berries-cache</module>
-		<module>berries-soa</module>
 		<module>berries-task</module>
-		<module>berries-microservice</module>
 		<module>berries-mybatis-generator</module>
 		<module>berries-web</module>
 		<module>berries-sign</module>

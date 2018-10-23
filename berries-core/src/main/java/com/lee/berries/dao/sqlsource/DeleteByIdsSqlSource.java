@@ -30,7 +30,7 @@ public class DeleteByIdsSqlSource extends BaseSqlSource {
 		String sql = SQL;
 		try{
 			sql = sql.replace("{tableName}", tableNameProvider.getTableName(classzz));
-			sql = sql.replace("${idFieldName}", idNameProvider.getIdName(classzz));
+			sql = sql.replace("${idFieldName}", idNameProvider.getIdName(classzz).getColumnName());
 			
 			StringBuffer in = new StringBuffer(500);
 			for(int i = 0; i < deleteByIdsParam.getIds().length; i++) {

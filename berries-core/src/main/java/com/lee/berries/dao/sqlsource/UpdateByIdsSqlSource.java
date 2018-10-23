@@ -9,7 +9,6 @@ import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.mapping.ParameterMapping.Builder;
 import org.apache.ibatis.session.Configuration;
 
-import com.lee.berries.common.utils.BerriesUtils;
 import com.lee.berries.dao.params.UpdateByIdsParam;
 
 public class UpdateByIdsSqlSource extends BaseSqlSource {
@@ -45,8 +44,8 @@ public class UpdateByIdsSqlSource extends BaseSqlSource {
 			}
 			sql = sql.replace("${ids}", in.toString().substring(1));
 			
-			String setFields = BerriesUtils.camelCaseToUnderline(updateByIdsParam.getFieldName()) + "=?";
-			String idFieldName = idNameProvider.getIdName(classzz);
+			String setFields = columnNameProvider.getColumnMapper(classzz, updateByIdsParam.getFieldName()).getColumnName() + "=?";
+			String idFieldName = idNameProvider.getIdName(classzz).getColumnName();
 			sql = sql.replace("{setFields}", setFields);
 			sql = sql.replace("${idFieldName}", idFieldName);
 			

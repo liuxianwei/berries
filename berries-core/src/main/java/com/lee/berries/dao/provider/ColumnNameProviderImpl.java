@@ -1,8 +1,11 @@
 package com.lee.berries.dao.provider;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
-import com.lee.berries.common.utils.BerriesUtils;
+import com.lee.berries.dao.annotation.support.BerriesAnnotationSupport;
+import com.lee.berries.dao.annotation.support.MethodMapper;
 
 /**
  * 数据库表名与对象名之间的转换关系
@@ -16,8 +19,14 @@ import com.lee.berries.common.utils.BerriesUtils;
 public class ColumnNameProviderImpl implements ColumnNameProvider {
 
 	@Override
-	public <T> String getColumnName(String fieldName) {
-		return BerriesUtils.camelCaseToUnderline(fieldName);
+	public <T> List<MethodMapper> getColumnMapper(Class<T> classzz) {
+		return BerriesAnnotationSupport.getInstance().getMethodMapper(classzz);
+	}
+
+	@Override
+	public <T> MethodMapper getColumnMapper(Class<T> classzz, String fieldName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
