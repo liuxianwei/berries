@@ -47,7 +47,7 @@ public class RedisDistributedLockImpl implements DistributedLock {
 				locked = true;
 				break;
 			}
-			if(isTimeOut() && count++ % 20 == 0){//没20次检测一次
+			if(count++ % 20 == 0 && isTimeOut()){//没20次检测一次
 				redis.delete(lockName);
 			}
 			try {
@@ -83,7 +83,7 @@ public class RedisDistributedLockImpl implements DistributedLock {
 				locked = true;
 				break;
 			}
-			if(isTimeOut() && count++ % 20 == 0){//没20次检测一次
+			if(count++ % 20 == 0 && isTimeOut()){//没20次检测一次
 				redis.delete(lockName);
 			}
 			try {
