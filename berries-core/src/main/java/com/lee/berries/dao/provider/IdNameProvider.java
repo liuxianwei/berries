@@ -14,5 +14,5 @@ public interface IdNameProvider {
 	 * @param classzz
 	 * @return
 	 */
-	<T> MethodMapper getIdName(Class<T> classzz);
+	<T> MethodMapper getIdMapper(Class<T> classzz);
 }

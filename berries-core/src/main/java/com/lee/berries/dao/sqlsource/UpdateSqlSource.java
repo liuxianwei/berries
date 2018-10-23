@@ -26,7 +26,7 @@ public class UpdateSqlSource extends BaseSqlSource {
 		sql = sql.replace("{tableName}", tableNameProvider.getTableName(object.getClass()));
 		try{
 			StringBuilder setFields = new StringBuilder(500);
-			MethodMapper idMapper = idNameProvider.getIdName(object.getClass());
+			MethodMapper idMapper = idNameProvider.getIdMapper(object.getClass());
 			String idFieldName = idMapper.getFieldName();
 			for(MethodMapper methodMapper : BerriesAnnotationSupport.getInstance().getMethodMapper(object.getClass())) {
 				if(!idFieldName.equals(methodMapper.getFieldName())) {

@@ -27,7 +27,7 @@ public class DeleteSqlSource extends BaseSqlSource {
 		String sql = SQL;
 		sql = sql.replace("{tableName}", tableNameProvider.getTableName(paramObject.getClass()));
 		try{
-			MethodMapper idMapper = idNameProvider.getIdName(paramObject.getClass());
+			MethodMapper idMapper = idNameProvider.getIdMapper(paramObject.getClass());
 			Builder builder = new Builder(configuration, idMapper.getFieldName() , idMapper.getMethod().getReturnType());
 			ParameterMapping parameterMapping = builder.build();
 			parameterMappings.add(parameterMapping);

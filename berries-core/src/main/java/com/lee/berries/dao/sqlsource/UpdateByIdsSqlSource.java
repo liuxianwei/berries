@@ -45,7 +45,7 @@ public class UpdateByIdsSqlSource extends BaseSqlSource {
 			sql = sql.replace("${ids}", in.toString().substring(1));
 			
 			String setFields = columnNameProvider.getColumnMapper(classzz, updateByIdsParam.getFieldName()).getColumnName() + "=?";
-			String idFieldName = idNameProvider.getIdName(classzz).getColumnName();
+			String idFieldName = idNameProvider.getIdMapper(classzz).getColumnName();
 			sql = sql.replace("{setFields}", setFields);
 			sql = sql.replace("${idFieldName}", idFieldName);
 			

@@ -14,7 +14,7 @@ import com.lee.berries.dao.annotation.support.MethodMapper;
 public class IdNameProviderImpl implements IdNameProvider {
 
 	@Override
-	public <T> MethodMapper getIdName(Class<T> classzz) {
+	public <T> MethodMapper getIdMapper(Class<T> classzz) {
 		return BerriesAnnotationSupport.getInstance().getIdMapper(classzz);
 	}
 

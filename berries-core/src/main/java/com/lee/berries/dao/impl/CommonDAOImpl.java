@@ -44,7 +44,7 @@ public class CommonDAOImpl implements CommonDAO {
 		T target = null;
 		try{
 			target = classzz.newInstance();
-			BeanUtils.setProperty(target, idNameProvider.getIdName(classzz).getFieldName(), id);
+			BeanUtils.setProperty(target, idNameProvider.getIdMapper(classzz).getFieldName(), id);
 		}
 		catch(Exception e){
 			//防御性容错
@@ -176,7 +176,7 @@ public class CommonDAOImpl implements CommonDAO {
 	@Override
 	public <T> void save(T object) {
 		try {
-			MethodMapper idMapper = ProviderFactory.getIdNameProvider().getIdName(object.getClass());
+			MethodMapper idMapper = ProviderFactory.getIdNameProvider().getIdMapper(object.getClass());
 			Object idValue = idMapper.getValue(object);
 			if(idValue == null) {
 				BeanUtils.setProperty(object, idMapper.getFieldName(), IdWorkFactory.get().nextId());
@@ -191,7 +191,7 @@ public class CommonDAOImpl implements CommonDAO {
 	public <T> int save(T object, String... whereFieldNames) {
 		SaveWithWhereParam<T> saveWithWhereParam = new SaveWithWhereParam<T>(object, whereFieldNames);
 		try {
-			MethodMapper idMapper = ProviderFactory.getIdNameProvider().getIdName(object.getClass());
+			MethodMapper idMapper = ProviderFactory.getIdNameProvider().getIdMapper(object.getClass());
 			Object idValue = idMapper.getValue(object);
 			if(idValue == null) {
 				BeanUtils.setProperty(object, idMapper.getFieldName(), IdWorkFactory.get().nextId());

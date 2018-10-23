@@ -34,7 +34,7 @@ public class UpdateWithOptimisticLockSqlSource extends BaseSqlSource {
 		sql = sql.replace("{tableName}", tableNameProvider.getTableName(update.getClass()));
 		try{
 			StringBuilder setFields = new StringBuilder(500);
-			MethodMapper idMapper = idNameProvider.getIdName(update.getClass());
+			MethodMapper idMapper = idNameProvider.getIdMapper(update.getClass());
 			
 			for(MethodMapper mapper : BerriesAnnotationSupport.getInstance().getMethodMapper(update.getClass())) {
 				if(!idMapper.getFieldName().equals(mapper.getFieldName())) {
