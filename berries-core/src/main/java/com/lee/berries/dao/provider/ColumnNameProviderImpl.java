@@ -24,7 +24,7 @@ public class ColumnNameProviderImpl implements ColumnNameProvider {
 	}
 
 	@Override
-	public <T> MethodMapper getColumnMapper(Class<T> classzz, String fieldName) {
+	public <T> MethodMapper getColumnName(Class<T> classzz, String fieldName) {
 		// TODO Auto-generated method stub
 		return null;
 	}

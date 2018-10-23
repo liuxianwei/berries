@@ -23,5 +23,5 @@ public interface ColumnNameProvider {
 	 * @param classzz
 	 * @return
 	 */
-	<T> MethodMapper getColumnMapper(Class<T> classzz, String fieldName);
+	<T> MethodMapper getColumnName(Class<T> classzz, String fieldName);
 }
