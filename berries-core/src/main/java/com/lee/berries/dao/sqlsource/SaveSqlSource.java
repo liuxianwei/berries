@@ -45,6 +45,7 @@ public class SaveSqlSource extends BaseSqlSource {
 			this.boundSql = new BoundSql(configuration, sql, parameterMappings, object);
 		}
 		catch(Exception e){
+			logger.error("error", e);
 			//防御性容错
 		}
 		return sql;

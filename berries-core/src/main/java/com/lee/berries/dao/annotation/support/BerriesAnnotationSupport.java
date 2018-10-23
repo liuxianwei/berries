@@ -39,7 +39,9 @@ public class BerriesAnnotationSupport {
 				}
 				else {
 					Id id = method.getAnnotation(Id.class);
-					columnName = id.name();
+					if(id != null) {
+						columnName = id.name();
+					}
 				}
 				if(columnName != null) {
 					MethodMapper methodMapper = new MethodMapper();
