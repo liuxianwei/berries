@@ -47,7 +47,7 @@ public class BerriesCommentGenerator implements CommentGenerator {
 	    sb.append(" ");
 	    sb.append(currentDateStr);
 	    compilationUnit.addFileCommentLine(sb.toString());
-	    compilationUnit.addFileCommentLine("*/");
+	    compilationUnit.addFileCommentLine(" */");
 	    /*if(compilationUnit instanceof TopLevelClass) {
 	    	TopLevelClass topClass = (TopLevelClass) compilationUnit;
 	    	topClass.addImportedType("com.lee.berries.dao.annotation.Entity");
@@ -286,11 +286,15 @@ public class BerriesCommentGenerator implements CommentGenerator {
 
 	
 	public void addModelClassComment(TopLevelClass topClass, IntrospectedTable introspectedTable) {
-		topClass.addImportedType("com.lee.berries.dao.annotation.Id");
+		topClass.addJavaDocLine("/**");
+    	topClass.addJavaDocLine(" * " + introspectedTable.getRemarks());
+    	topClass.addJavaDocLine(" */");
+    	
+    	topClass.addImportedType("com.lee.berries.dao.annotation.Id");
 		topClass.addImportedType("com.lee.berries.dao.annotation.Entity");
 		topClass.addImportedType("com.lee.berries.dao.annotation.Column");
     	topClass.addAnnotation("@Entity(tableName = \"" + introspectedTable.getFullyQualifiedTable().getIntrospectedTableName() + "\")");
-	}
+    }
 
 	
 	public void addGeneralMethodAnnotation(Method method, IntrospectedTable introspectedTable,
