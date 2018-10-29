@@ -48,11 +48,6 @@ public class BerriesCommentGenerator implements CommentGenerator {
 	    sb.append(currentDateStr);
 	    compilationUnit.addFileCommentLine(sb.toString());
 	    compilationUnit.addFileCommentLine(" */");
-	    /*if(compilationUnit instanceof TopLevelClass) {
-	    	TopLevelClass topClass = (TopLevelClass) compilationUnit;
-	    	topClass.addImportedType("com.lee.berries.dao.annotation.Entity");
-	    	topClass.addAnnotation("@Entity(tableName = \"\")");
-	    }*/
 	    return;
 	}
 

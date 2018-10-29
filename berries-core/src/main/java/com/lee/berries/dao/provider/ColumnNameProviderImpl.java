@@ -25,8 +25,7 @@ public class ColumnNameProviderImpl implements ColumnNameProvider {
 
 	@Override
 	public <T> MethodMapper getColumnMapper(Class<T> classzz, String fieldName) {
-		// TODO Auto-generated method stub
-		return null;
+		return BerriesAnnotationSupport.getInstance().getMethodMapper(classzz, fieldName);
 	}
 
 }

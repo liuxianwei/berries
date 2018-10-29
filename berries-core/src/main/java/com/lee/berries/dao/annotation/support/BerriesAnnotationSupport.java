@@ -57,7 +57,7 @@ public class BerriesAnnotationSupport {
 		return mapper;
 	}
 	
-	public <T> MethodMapper getColumnName(Class<T> classzz, String fieldName) {
+	public <T> MethodMapper getMethodMapper(Class<T> classzz, String fieldName) {
 		List<MethodMapper> mapper = getMethodMapper(classzz);
 		for(MethodMapper methodMapper : mapper) {
 			if(methodMapper.getFieldName().equals(fieldName)) {
