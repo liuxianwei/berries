@@ -77,7 +77,7 @@
 	<distributionManagement>
 		<repository>
 			<id>deploy</id>
-			<url>http://192.168.5.55:10081/nexus/content/repositories/releases/</url>
+			<url>http://116.55.229.118:10081/nexus/content/repositories/releases/</url>
 		</repository>
 	</distributionManagement>
 </project>
