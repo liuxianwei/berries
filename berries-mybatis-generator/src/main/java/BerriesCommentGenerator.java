@@ -15,6 +15,7 @@ import org.mybatis.generator.api.dom.java.JavaElement;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.java.TypeParameter;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.config.PropertyRegistry;
@@ -26,6 +27,8 @@ public class BerriesCommentGenerator implements CommentGenerator {
 	private boolean suppressDate;
 	private boolean suppressAllComments;
 	private String currentDateStr;
+	
+	private static final String byteName = "java.lang.Byte";
 
 	public BerriesCommentGenerator() {
 	    super();
@@ -158,6 +161,12 @@ public class BerriesCommentGenerator implements CommentGenerator {
 	    //      addJavadocTag(field, false);
 
 	    field.addJavaDocLine(" */");
+	    
+	    FullyQualifiedJavaType type = field.getType();
+	    if(type.getFullyQualifiedName().equals(byteName)) {
+	    	field.setType(new FullyQualifiedJavaType("java.lang.Boolean"));
+	    }
+	    
 	}
 
 	public void addFieldComment(Field field, IntrospectedTable introspectedTable) {
@@ -221,6 +230,11 @@ public class BerriesCommentGenerator implements CommentGenerator {
 	    else {
 	    	method.addAnnotation("@Column(name = \"" + introspectedColumn.getActualColumnName() + "\")");
 	    }
+	    
+	    FullyQualifiedJavaType type = method.getReturnType();
+	    if(type.getFullyQualifiedName().equals(byteName)) {
+	    	method.setReturnType(new FullyQualifiedJavaType("java.lang.Boolean"));
+	    }
 	}
 
 	public void addSetterComment(Method method, IntrospectedTable introspectedTable,
@@ -247,6 +261,21 @@ public class BerriesCommentGenerator implements CommentGenerator {
 	    //      addJavadocTag(method, false);
 
 	    method.addJavaDocLine(" */");
+	    
+		for (Parameter parameter : method.getParameters()) {
+			try {
+				FullyQualifiedJavaType type = parameter.getType();
+				if (type.getFullyQualifiedName().equals(byteName)) {
+					java.lang.reflect.Field field = parameter.getClass().getDeclaredField("type");
+					field.setAccessible(true);
+					field.set(parameter, new FullyQualifiedJavaType("java.lang.Boolean"));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 	}
 
 	public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable, boolean markAsDoNotDelete) {
