@@ -52,6 +52,7 @@ public class UpdateByIdsSqlSource extends BaseSqlSource {
 			this.boundSql = new BoundSql(configuration, sql, parameterMappings, parameterObject);
 		}
 		catch(Exception e){
+			logger.error("UpdateByIds", e);
 			//防御性容错
 		}
 		return sql;

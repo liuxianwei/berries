@@ -13,9 +13,9 @@ import com.lee.berries.service.IBaseService;
 
 public abstract class BaseServiceImpl implements IBaseService {
 	
-	public final static String DELETE_FLAG_FIELD_NAME = "delete_flag";
+	public final static String DELETE_FLAG_FIELD_NAME = "deleteFlag";
 	
-	public final static String ENABLE_FLAG_FIELD_NAME = "enable_flag";
+	public final static String ENABLE_FLAG_FIELD_NAME = "enableFlag";
 	
 	@Autowired
 	protected CommonDAO commonDao;
