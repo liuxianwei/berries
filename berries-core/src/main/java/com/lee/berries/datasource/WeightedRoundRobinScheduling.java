@@ -13,7 +13,7 @@ public class WeightedRoundRobinScheduling {
 
 	private List<Server> serverList = new ArrayList<>(); // 服务器集合
 
-	public Server GetBestServer() {
+	public Server getBestServer() {
 		Server server = null;
 		Server best = null;
 		int total = 0;

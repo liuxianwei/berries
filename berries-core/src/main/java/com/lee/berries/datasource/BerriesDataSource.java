@@ -20,7 +20,7 @@ public class BerriesDataSource extends AbstractBerriesDataSource{
 
 	private final static String HOST_SPLIT = ","; //多主机分隔符
 	
-	private final static String HOST_REXP = "\\[.*\\]";
+	private final static String HOST_REXP = "//.*/";
 	
 	private String weight; //读的权重 0为不参加读
 	private String defaultHost; //默认数据源主机地址，ip:port的形式
@@ -38,8 +38,9 @@ public class BerriesDataSource extends AbstractBerriesDataSource{
 	private WeightedRoundRobinScheduling weightedRoundRobinScheduling;
 	
 	/**
-	 * 采用[]形式，以,分割每个主机
-	 * [192.168.5.11:3306,192.168.5.12:3306]
+	 * 以,分割每个主机
+	 * master, slave1, slave2这样的形式来组成url
+	 * 192.168.5.11:3306,192.168.5.12:3306
 	 * 采用读写分离的时候默认第一个主机为写
 	 * @throws SQLException 
 	 */
@@ -114,12 +115,12 @@ public class BerriesDataSource extends AbstractBerriesDataSource{
 	
 	private String[] getHostList(){
 		String jdbcUrl = super.getJdbcUrl();
-		int start = jdbcUrl.indexOf("[");
-		int end = jdbcUrl.indexOf("]");
+		int start = jdbcUrl.indexOf("//");
+		int end = jdbcUrl.lastIndexOf("/");
 		if(start == -1 || end == -1) {
 			return null;
 		}
-		String hosts = jdbcUrl.substring(start + 1, end);
+		String hosts = jdbcUrl.substring(start + 2, end);
 		return hosts.split(HOST_SPLIT);
 	}
 	
@@ -179,7 +180,7 @@ public class BerriesDataSource extends AbstractBerriesDataSource{
 				return resolvedDataSources.get(key);
 			}
 			else { //如果是读库，那么根据权重进行负载均衡
-				Server server = weightedRoundRobinScheduling.GetBestServer();
+				Server server = weightedRoundRobinScheduling.getBestServer();
 				if(server != null) {
 					key = server.getName();
 				}
