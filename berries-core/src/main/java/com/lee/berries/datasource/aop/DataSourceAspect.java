@@ -16,11 +16,16 @@ import com.lee.berries.datasource.BerriesDataSourceHolder;
  */
 public class DataSourceAspect {
 	
+	private boolean enable;
+	
 	private List<String> writeMethod = new ArrayList<>();
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	public void before(JoinPoint point) {
+	    if(!enable) {
+		return;
+	    }
 		String methodName = point.getSignature().getName();
 		String key = BerriesDataSourceHolder.get();
 		if(key == null) {
@@ -34,6 +39,9 @@ public class DataSourceAspect {
 	}
 	
 	public void after(JoinPoint point) {
+	    if(!enable) {
+		return;
+	    }
 		BerriesDataSourceHolder.set(null);
 		logger.debug("clean datasource");
 	}
@@ -55,6 +63,14 @@ public class DataSourceAspect {
 				writeMethod.add(m);
 			}
 		}
+	}
+	
+	public boolean isEnable() {
+	    return enable;
+	}
+
+	public void setEnable(boolean enable) {
+	    this.enable = enable;
 	}
 
 }

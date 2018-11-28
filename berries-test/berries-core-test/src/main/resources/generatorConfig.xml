@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE generatorConfiguration  
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"  
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">  
+  
+<generatorConfiguration>  
+    <classPathEntry location="E:/java/apache-maven-3.0.5/repository//mysql/mysql-connector-java/5.1.14/mysql-connector-java-5.1.14.jar" /><!--驱动包的绝对路径-->  
+      <context id="DB2Tables" targetRuntime="MyBatis3"><!--生成映射的类型，也可以生成ibatis的。具体参看mybatis-generator-->
+
+       <commentGenerator type="BerriesCommentGenerator"><!--具体参看mybatis-generator-->
+             <property name="tinyintToBoolean" value="true"/>
+             <property name="suppressDate" value="true"/>
+        	 <property name="suppressAllComments" value="false" /> 
+        </commentGenerator>  
+  
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"  
+            connectionURL="jdbc:mysql://127.0.0.1:3306/berries-demo?useUnicode=true&amp;characterEncoding=UTF-8"
+            userId="root" password="mysql"><!--数据库连接信息。具体参看mybatis-generator-->  
+             <property name="useInformationSchema" value="true"></property>
+        </jdbcConnection>  
+  
+        <javaTypeResolver><!--具体参看mybatis-generator-->  
+            <property name="forceBigDecimals" value="false" />  
+        </javaTypeResolver>  
+  
+	<!--以下三个标签主要解析targetPackage和targetProject。其它的具体参看mybatis-generator-->
+
+	<!--targetPackage，是生成文件所在的包路径-->
+
+	<!--targetProject，是相对于本xml配置文件的相对路径，是targetPackage包路径的父级目录。-->
+
+        <javaModelGenerator targetPackage="com.lee.berries.test.dao.po" targetProject="src/main/java">  
+            <property name="enableSubPackages" value="true" />  
+            <property name="trimStrings" value="true" />  
+        </javaModelGenerator>  
+  
+        <sqlMapGenerator targetPackage="mybatis.mapper" targetProject="src/main/resources">  
+            <property name="enableSubPackages" value="true" />  
+        </sqlMapGenerator>  
+        
+        <table tableName="user" domainObjectName="User"
+        	enableInsert="false" 
+       		enableSelectByExample="false"
+        	enableUpdateByPrimaryKey="false"
+        	enableDeleteByPrimaryKey="false"
+        	enableDeleteByExample="false"
+        	enableCountByExample="false"
+        	enableUpdateByExample="false">
+        </table>
+    </context>  
+</generatorConfiguration> 

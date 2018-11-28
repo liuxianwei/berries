@@ -19,15 +19,15 @@
 	<bean id="dataSource" class="com.lee.berries.datasource.BerriesDataSource"
 		init-method="init" destroy-method="close">
 		
-		<property name="jdbcUrl" value="${jdbc.url}" />
-		<property name="username" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" />
-		<property name="weight" value="${jdbc.weight:}" />
+		<property name="jdbcUrl" value="${spring.datasource.jdbcUrl}" />
+		<property name="username" value="${spring.datasource.username}" />
+		<property name="password" value="${spring.datasource.password}" />
+		<property name="weight" value="${spring.datasource.weight:}" />
 
-		<property name="filters" value="${jdbc.filters:stat}" />
+		<property name="filters" value="${spring.datasource.filters:stat}" />
 
-		<property name="maxActive" value="${jdbc.maxActive:5}" />
-		<property name="initialSize" value="${jdbc.initialSize:1}" />
+		<property name="maxActive" value="${spring.datasource.maxActive:5}" />
+		<property name="initialSize" value="${spring.datasource.initialSize:1}" />
 		<property name="maxWait" value="60000" />
 		<property name="minIdle" value="1" />
 
@@ -39,7 +39,7 @@
 		<property name="testOnReturn" value="false" />
 
 		<property name="poolPreparedStatements" value="true" />
-		<property name="maxOpenPreparedStatements" value="${jdbc.maxOpenPreparedStatements:6}" />
+		<property name="maxOpenPreparedStatements" value="${spring.datasource.maxOpenPreparedStatements:6}" />
 
 		<property name="asyncInit" value="true" />
 	</bean>
@@ -65,6 +65,7 @@
 	</bean>
 
 	<bean id="dataSourceAspect" class="com.lee.berries.datasource.aop.DataSourceAspect">
+		<property name="enable" value="${datasource.enable:false}"></property>
 		<property name="needWriteMethod" value="${datasource.needWriteMethod:add,save,update,delete,insert,do}"/>
 	</bean>
 	
