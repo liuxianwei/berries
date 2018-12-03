@@ -12,12 +12,14 @@
 
 	<properties>
 		<jdk.version>1.8</jdk.version>
+		<berries.version>2.0.0</berries.version>
 	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.lee</groupId>
 			<artifactId>berries-core</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${berries.version}</version>
 		</dependency>
 	</dependencies>
 
