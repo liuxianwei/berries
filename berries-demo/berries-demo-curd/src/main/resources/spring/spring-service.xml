@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx" 
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd 
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context.xsd 
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+	   http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+  	
+	<import resource="classpath*:spring/berries-datasource.xml"/>
+  	
+	<!-- 配置扫描的包 -->
+    <context:component-scan base-package="com.lee.berries.demo" />
+    
+     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="nestedTransactionAllowed" value="true"/>
+        <property name="validateExistingTransaction" value="true"/>
+        <property name="globalRollbackOnParticipationFailure" value="false" />
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    
+    <!-- AOP配置事物需要拦截需要添加事物的方法 -->
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="query*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="select*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="check*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="show*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="find*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="list*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="save*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="modify*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="del*"  propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="cancel*"  propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="do*"  propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="set*"  propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="add*"  propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="*" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	
+    <!-- 配置AOP切面使用上面提供的切面拦截器(主要用于与数据库交互的层)对所有的SERVICE方法添加事物 -->
+ 	<aop:config> 
+ 		<aop:pointcut id="transactionPointcut" expression="(execution(* com.lee.berries.demo.service..impl..*.*(..)))"/> 
+ 		<aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" order="3"/> 
+ 	</aop:config>
+    
+</beans>

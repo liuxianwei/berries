@@ -8,7 +8,6 @@
 		<version>2.0.0</version>
 	</parent>
 	<artifactId>berries-demo-curd</artifactId>
-	<packaging>war</packaging>
 
 	<properties>
 		<jdk.version>1.8</jdk.version>

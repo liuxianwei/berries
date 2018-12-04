@@ -1,5 +1,8 @@
 # Berries-草莓框架，一个敏捷的JAVA开发框架
 
+#关于框架名称
+开始写这个框架的时候，没有想好名称，想到我的女儿喜欢草莓，于是反了草莓的英文，写成了Berries，过了很久才发现这个单词的意思是果酱，于是将错就错，想着也是差不多意思。就使用这个名称作为框架名称。
+
 #### 项目介绍
 1 这是一个JAVA开发框架，集成了SpringMVC与Mybatis的整合框架
 2 实现了项目中常见的一些开发功能，数据库的增删查改，让你从繁杂的sql中解放双手。只关注业务逻辑
@@ -13,30 +16,12 @@ Spring+SpringMVC+Mybatis
 
 
 #### 安装教程
-
-1. 克隆代码
-2. Maven加入依赖
-3. 加入配置文件
-
-#### 使用说明
-
-1. xxxx
-2. xxxx
-3. xxxx
+请移步去berries-demo下，有详细的例子。
 
 #### 参与贡献
 
-1. Fork 本项目
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
+1. 刘县卫
+2. 舒伟飞
 
-
-#### 码云特技
-
-1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2. 码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4. [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5. 码云官方提供的使用手册 [http://git.mydoc.io/](http://git.mydoc.io/)
-6. 码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+### 其他
+由于Spring boot热火起来，因此我也希望Berries支持Springboot，因此写了一个针对于boot的start。代码地址在https://gitee.com/liuxianwei/berries-boot

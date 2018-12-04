@@ -7,7 +7,7 @@
  * see_to_target
 */
 
-package com.lee.berries.test;
+package com.lee.berries.demo;
 
 import org.junit.After;
 import org.junit.Before;
@@ -37,7 +37,7 @@ public abstract class BaseTest {
     public void before(){
         //加载spring容器
     	logger.info("start unit test");
-        context = new ClassPathXmlApplicationContext("/spring/berries-test.xml");
+        context = new ClassPathXmlApplicationContext("/spring/berries-curd-test.xml");
         logger.info("finish spring context!");
         
     }

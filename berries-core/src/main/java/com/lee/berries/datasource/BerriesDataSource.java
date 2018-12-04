@@ -131,7 +131,7 @@ public class BerriesDataSource extends AbstractBerriesDataSource{
 	 * @throws SQLException 
 	 */
 	private DruidDataSource create(String key, String host) throws SQLException {
-		String jdbcUrl = super.getJdbcUrl().replaceFirst(HOST_REXP, host);
+		String jdbcUrl = super.getJdbcUrl().replaceFirst(HOST_REXP, "//" + host + "/");
 		DruidDataSource dataSource = new DruidDataSource();
 		
 		//dataSource.setName(host + "_" + key);

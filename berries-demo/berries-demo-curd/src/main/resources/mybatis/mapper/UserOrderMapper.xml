@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.mapper.UserOrderMapper">
+  <resultMap id="BaseResultMap" type="com.lee.berries.demo.po.UserOrder">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="order_name" jdbcType="VARCHAR" property="orderName" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, order_name, price, create_time
+  </sql>
+</mapper>

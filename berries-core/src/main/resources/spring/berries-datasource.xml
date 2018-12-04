@@ -65,8 +65,8 @@
 	</bean>
 
 	<bean id="dataSourceAspect" class="com.lee.berries.datasource.aop.DataSourceAspect">
-		<property name="enable" value="${datasource.enable:false}"></property>
-		<property name="needWriteMethod" value="${datasource.needWriteMethod:add,save,update,delete,insert,do}"/>
+		<property name="enable" value="${replication.enable:false}"></property>
+		<property name="needWriteMethod" value="${replication.needWriteMethod:add,save,update,delete,insert,do}"/>
 	</bean>
 	
 	<!-- aop配置 -->
@@ -74,7 +74,7 @@
 		<!--切面 -->
 		<aop:aspect ref="dataSourceAspect" order="0">
 			<!-- 切点 -->
-			<aop:pointcut expression="${datasource.expression}" id="datasourcePointcut" />
+			<aop:pointcut expression="${replication.expression:}" id="datasourcePointcut" />
 			<!--连接通知方法与切点 -->
 			<aop:before method="before" pointcut-ref="datasourcePointcut" />
 			<aop:after method="after" pointcut-ref="datasourcePointcut" />
