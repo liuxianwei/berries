@@ -1,7 +1,7 @@
 # Berries-demo-curd-web
 
 #### 项目介绍
-本项目演示如何在web中使用Berries框架。curd业务，redis缓存的使用，定时任务 task的使用。
+本项目演示如何在web中使用Berries框架。curd，redis缓存，redis分布式锁，定时任务 task的使用。
 
 
 #### 安装教程
