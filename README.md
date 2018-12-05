@@ -13,8 +13,7 @@
 
 ## 软件架构
 	Spring+SpringMVC+Mybatis
-
-
+	
 ## 安装教程
 	请移步去berries-demo下，有详细的例子。
 
