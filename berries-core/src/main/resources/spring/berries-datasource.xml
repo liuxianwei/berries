@@ -55,6 +55,7 @@
 		<property name="typeAliasesPackage" value="com.lee.berries.dao.po" />
 		<property name="plugins">
 			<array>
+				<bean class="com.lee.berries.dao.plugin.ReplicationPlugin"></bean>
 				<bean class="com.lee.berries.dao.plugin.QueryPlugin"></bean>
 				<bean class="com.lee.berries.dao.plugin.UpdatePlugin"></bean>
 			</array>

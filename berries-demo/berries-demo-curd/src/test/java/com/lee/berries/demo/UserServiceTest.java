@@ -10,9 +10,11 @@ public class UserServiceTest extends BaseTest {
 	@Test
 	public void testSave() {
 		UserService userService = getBean(UserService.class);
+		for(int i = 0; i < 100; i++) {
 		User user = new User();
 		user.setName("Hello Berries!");
 		userService.save(user);
+		}
 	}
 	
 	@Test
@@ -28,7 +30,7 @@ public class UserServiceTest extends BaseTest {
 	@Test
 	public void testGet() {
 		UserService userService = getBean(UserService.class);
-		User user = userService.get(519533689367236608L);
+		User user = userService.get(520169192559022080L);
 		System.out.println(user.getName());
 	}
 	

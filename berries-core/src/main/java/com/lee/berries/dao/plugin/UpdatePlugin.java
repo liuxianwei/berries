@@ -2,8 +2,6 @@ package com.lee.berries.dao.plugin;
 
 import java.util.Properties;
 
-import javax.annotation.Resource;
-
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.Interceptor;
@@ -24,17 +22,9 @@ import com.lee.berries.dao.sqlsource.SaveWithWhereSqlSource;
 import com.lee.berries.dao.sqlsource.UpdateByIdsSqlSource;
 import com.lee.berries.dao.sqlsource.UpdateSqlSource;
 import com.lee.berries.dao.sqlsource.UpdateWithOptimisticLockSqlSource;
-import com.lee.berries.router.SharingSQLConvertFactory;
-import com.lee.berries.router.TableSharings;
 
 @Intercepts({ @Signature(type = Executor.class, method = "update", args = { MappedStatement.class, Object.class}) })
 public class UpdatePlugin implements Interceptor {
-
-	@Resource
-	TableSharings tableSharings;
-	
-	@Resource
-	SharingSQLConvertFactory sharingSQLConvertFactory;
 
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -63,9 +53,6 @@ public class UpdatePlugin implements Interceptor {
 		}else if(StatementConstants.STATEMENT_UPDATE_BY_IDS.equals(statement.getId())){
 			UpdateByIdsSqlSource sqlSource = new UpdateByIdsSqlSource(statement.getConfiguration(), paramObject);
 			BerriesMappedStatementUtils.processMappedStatement(statement, sqlSource, invocation.getArgs());
-		}
-		if(tableSharings.isEnableSharing()) {
-			sharingSQLConvertFactory.convert(invocation.getArgs());
 		}
 		return invocation.proceed();
 	}

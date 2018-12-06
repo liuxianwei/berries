@@ -2,8 +2,6 @@ package com.lee.berries.dao.plugin;
 
 import java.util.Properties;
 
-import javax.annotation.Resource;
-
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.Interceptor;
@@ -22,18 +20,10 @@ import com.lee.berries.dao.sqlsource.BerriesMappedStatementUtils;
 import com.lee.berries.dao.sqlsource.QuerySqlSource;
 import com.lee.berries.dao.sqlsource.RowSqlSource;
 import com.lee.berries.dao.sqlsource.SelectSqlSource;
-import com.lee.berries.router.SharingSQLConvertFactory;
-import com.lee.berries.router.TableSharings;
 
 @Intercepts({ @Signature(type = Executor.class, method = "query", args = { MappedStatement.class, Object.class,
 		RowBounds.class, ResultHandler.class }) })
 public class QueryPlugin implements Interceptor {
-
-	@Resource
-	TableSharings tableSharings;
-	
-	@Resource
-	SharingSQLConvertFactory sharingSQLConvertFactory;
 	
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -70,9 +60,6 @@ public class QueryPlugin implements Interceptor {
 			invocation.getArgs()[2] = RowBounds.DEFAULT;
 			BaseSqlSource sqlSource = new QuerySqlSource(statement.getId(), statement.getConfiguration(), paramObject, rowBounds);
 			BerriesMappedStatementUtils.processMappedStatement(statement, sqlSource, invocation.getArgs());
-		}
-		if(tableSharings.isEnableSharing()) {
-			sharingSQLConvertFactory.convert(invocation.getArgs());
 		}
 		Object object = invocation.proceed();
 		return object;
