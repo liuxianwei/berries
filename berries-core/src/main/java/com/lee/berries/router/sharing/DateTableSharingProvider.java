@@ -29,7 +29,7 @@ public class DateTableSharingProvider implements TableSharingProvider {
 				date = DATE_PARSE.parse((String) value);
 			} catch (ParseException e) {}
 		}
-		else if(date instanceof Date){
+		else if(value instanceof Date){
 			date = (Date) value;
 		}
 		else {
