@@ -1,3 +1,4 @@
+
 package com.berries.dao;
 
 import com.lee.berries.dao.annotation.Entity;
