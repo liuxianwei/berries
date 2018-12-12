@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.github.pagehelper.PageHelper;
 import com.lee.berries.common.utils.ReflectUtils;
 import com.lee.berries.dao.CommonDAO;
 import com.lee.berries.dao.Page;
@@ -128,6 +129,20 @@ public class CommonDAOImpl implements CommonDAO {
 		if(page == null){
 			page = new Page<T>();
 		}
+<<<<<<< HEAD
+=======
+		com.github.pagehelper.Page<?> pageHelper = PageHelper.startPage(page.getCurrentPage(), page.getPageSize(), true);
+		List<T> list = null;
+		if(params == null) {
+			list = sqlSessionTemplate.selectList(statementId);
+		}
+		else {
+			list = sqlSessionTemplate.selectList(statementId, params);
+		}
+		Long total = pageHelper.getTotal();
+		page.setTotalResult(total.intValue());
+		page.setResult(list);
+>>>>>>> refs/remotes/origin/master
 		return page;
 	}
 	

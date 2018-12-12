@@ -46,7 +46,10 @@ public class UserServiceTest extends BaseTest {
 	public void testQuery() {
 		UserService userService = getBean(UserService.class);
 		User user = new User();
+<<<<<<< HEAD
 		user.setId(519533689367236608L);
+=======
+>>>>>>> refs/remotes/origin/master
 		Page<User> page = new Page<>();
 		page.setPageSize(2);
 		userService.findPage(user, page);

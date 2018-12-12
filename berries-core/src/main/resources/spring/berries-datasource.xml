@@ -60,12 +60,16 @@
 						<value>dialect=${pageHelper.dialect:com.github.pagehelper.dialect.helper.MySqlDialect}</value>
 					</property>
 				</bean>
+<<<<<<< HEAD
 				<bean class="com.github.pagehelper.PageInterceptor">
 					<property name="properties">
 						<value>dialect=${pageHelper.dialect:com.github.pagehelper.dialect.helper.MySqlDialect}</value>
 					</property>
 				</bean>
 				<bean class="com.lee.berries.dao.plugin.ShardingPlugin"></bean>
+=======
+				<bean class="com.lee.berries.dao.plugin.ReplicationPlugin"></bean>
+>>>>>>> refs/remotes/origin/master
 				<bean class="com.lee.berries.dao.plugin.QueryPlugin"></bean>
 				<bean class="com.lee.berries.dao.plugin.UpdatePlugin"></bean>
 			</array>

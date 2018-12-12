@@ -154,7 +154,11 @@
 			<dependency>
 			     <groupId>com.github.pagehelper</groupId>
 			     <artifactId>pagehelper</artifactId>
+<<<<<<< HEAD
 			     <version>5.1.8</version>
+=======
+			     <version>5.1.7</version>
+>>>>>>> refs/remotes/origin/master
 			 </dependency>
 
 			<dependency>

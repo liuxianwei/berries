@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -38,4 +39,46 @@
 	<build>
 		<finalName>berries-core</finalName>
 	</build>
+=======
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.lee</groupId>
+		<artifactId>berries</artifactId>
+		<version>2.0.0</version>
+	</parent>
+	<artifactId>berries-core</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.lee</groupId>
+			<artifactId>berries-common</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.1.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.8.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.4</version>
+		</dependency>
+		<dependency>
+		     <groupId>com.github.pagehelper</groupId>
+		     <artifactId>pagehelper</artifactId>
+		 </dependency>
+	</dependencies>
+
+	<build>
+		<finalName>berries-core</finalName>
+	</build>
+>>>>>>> refs/remotes/origin/master
 </project>
