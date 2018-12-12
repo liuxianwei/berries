@@ -1,8 +1,9 @@
 package com.lee.berries.demo.service;
 
 import com.lee.berries.demo.po.User;
+import com.lee.berries.service.IBaseService;
 
-public interface UserService {
+public interface UserService extends IBaseService{
 
 	void save(User user);
 	

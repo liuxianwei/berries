@@ -55,7 +55,17 @@
 		<property name="typeAliasesPackage" value="com.lee.berries.dao.po" />
 		<property name="plugins">
 			<array>
-				<bean class="com.lee.berries.dao.plugin.ReplicationPlugin"></bean>
+				<bean class="com.github.pagehelper.PageInterceptor">
+					<property name="properties">
+						<value>dialect=${pageHelper.dialect:com.github.pagehelper.dialect.helper.MySqlDialect}</value>
+					</property>
+				</bean>
+				<bean class="com.github.pagehelper.PageInterceptor">
+					<property name="properties">
+						<value>dialect=${pageHelper.dialect:com.github.pagehelper.dialect.helper.MySqlDialect}</value>
+					</property>
+				</bean>
+				<bean class="com.lee.berries.dao.plugin.ShardingPlugin"></bean>
 				<bean class="com.lee.berries.dao.plugin.QueryPlugin"></bean>
 				<bean class="com.lee.berries.dao.plugin.UpdatePlugin"></bean>
 			</array>

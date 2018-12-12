@@ -124,6 +124,14 @@ public class CommonDAOImpl implements CommonDAO {
 	}
 	
 	@Override
+	public <T> Page<T> findPage(String statementId, Object params, Page<T> page) {
+		if(page == null){
+			page = new Page<T>();
+		}
+		return page;
+	}
+	
+	@Override
 	public <T> int queryRow(BaseQuery<T> query){
 		if(query == null){
 			return 0;
