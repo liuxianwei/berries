@@ -61,6 +61,11 @@ public abstract class BaseServiceImpl implements IBaseService {
 		
 		return commonDao.findPage(object, page);
 	}
+	
+	@Override
+	public <T> Page<T> findPage(String statementId, Object params, Page<T> page) {
+		return commonDao.findPage(statementId, params, page);
+	}
 
 	@Override
 	public <T> int queryRow(BaseQuery<T> query) {

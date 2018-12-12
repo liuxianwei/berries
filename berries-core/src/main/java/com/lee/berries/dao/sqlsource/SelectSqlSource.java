@@ -47,12 +47,12 @@ public class SelectSqlSource extends BaseSqlSource {
 					parameterMappings.add(parameterMapping);
 				}
 			}
-			if(rowBounds != null && !rowBounds.equals(RowBounds.DEFAULT)) {
+			/*if(rowBounds != null && !rowBounds.equals(RowBounds.DEFAULT)) {
 				sqlBuffer.append(" limit ");
 				sqlBuffer.append(rowBounds.getOffset());
 				sqlBuffer.append(", ");
 				sqlBuffer.append(rowBounds.getLimit());
-			}
+			}*/
 			String sql = sqlBuffer.toString();
 			sql = sql.replace("{tableName}", tableNameProvider.getTableName(object.getClass()));
 			sql = sql.replace("{fields}", fields.substring(1));

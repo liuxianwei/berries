@@ -74,6 +74,15 @@ import com.lee.berries.dao.query.BaseQuery;
 	 * @return 记录结果包装
 	 */
 	 <T> Page<T> findPage(T object, Page<T> page);
+	 
+	 /**
+	  * 分页查询
+	  * @param statementId
+	  * @param params
+	  * @param page
+	  * @return
+	  */
+	 <T> Page<T> findPage(String statementId, Object params, Page<T> page);
 	
 	/**
 	 * 使用query组件查询记录数

@@ -2,6 +2,7 @@ package com.lee.berries.demo;
 
 import org.junit.Test;
 
+import com.lee.berries.dao.Page;
 import com.lee.berries.demo.po.User;
 import com.lee.berries.demo.service.UserService;
 
@@ -39,6 +40,16 @@ public class UserServiceTest extends BaseTest {
 		UserService userService = getBean(UserService.class);
 		Long []id = {1L,1L};
 		userService.delete(id);
+	}
+	
+	@Test
+	public void testQuery() {
+		UserService userService = getBean(UserService.class);
+		User user = new User();
+		Page<User> page = new Page<>();
+		page.setPageSize(2);
+		userService.findPage(user, page);
+		System.out.println(page.getTotalResult() + ":" + page.getResult().size());
 	}
 	
 	

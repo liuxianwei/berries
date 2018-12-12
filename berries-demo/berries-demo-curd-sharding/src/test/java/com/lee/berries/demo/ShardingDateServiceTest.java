@@ -37,7 +37,7 @@ public class ShardingDateServiceTest extends BaseTest {
 	@Test
 	public void testGet() {
 		ShardingDateService shardingDateService = getBean(ShardingDateService.class);
-		ShardingDate shardingDate = shardingDateService.get(10L, getDate(10));
+		ShardingDate shardingDate = shardingDateService.get(11L, getDate(11));
 		System.out.println(shardingDate.getName());
 	}
 	
